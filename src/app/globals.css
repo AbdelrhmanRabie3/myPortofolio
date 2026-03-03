@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-heading: "Inter", sans-serif;
+
+  /* Color palette — Noir & Emerald */
+  --color-bg-primary: rgb(8, 8, 12);
+  --color-bg-secondary: rgb(16, 16, 22);
+  --color-text-primary: rgb(245, 245, 245);
+  --color-text-secondary: rgb(163, 163, 170);
+  --color-text-muted: rgb(113, 113, 122);
+  --color-border-subtle: rgb(39, 39, 42);
+  --color-border-hover: rgb(63, 63, 70);
+
+  /* Accent colors */
+  --color-accent: rgb(52, 211, 153);
+  --color-accent-violet: rgb(251, 191, 36);
+  --color-accent-cyan: rgb(56, 189, 248);
+  --color-accent-rose: rgb(251, 113, 133);
+  --color-accent-glow: rgba(52, 211, 153, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  font-family:
+    var(--font-geist-sans, system-ui),
+    -apple-system,
+    sans-serif;
+}
+
+/* Accent text */
+.gradient-text {
+  @apply text-accent;
+}
+
+.gradient-text-warm {
+  @apply text-accent;
+}
+
+/* Card style */
+.glass-card {
+  @apply bg-bg-secondary border border-border-subtle rounded-xl;
+}
+
+/* Hidden gradient blobs (classic design) */
+.gradient-blob {
+  @apply hidden;
+}
+
+/* Section background */
+.aurora-bg {
+  @apply relative;
+}
+
+/* Subtle dot pattern */
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(52, 211, 153, 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+}
+
+/* Section divider */
+.section-divider {
+  @apply h-px bg-border-subtle/30;
+}
+
+/* Nav link with indicator */
+.nav-link {
+  @apply relative;
+}
+
+/* Pulse animation for live status */
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.live-pulse {
+  animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
