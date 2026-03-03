@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Abdelrahman Rabie - Full-Stack Developer",
-  description: "Portfolio of Abdelrahman Rabie, a Full-Stack MERN Developer based in Cairo, Egypt. Specializing in React, Next.js, Node.js, and MongoDB.",
+  description:
+    "Portfolio of Abdelrahman Rabie, a Full-Stack MERN Developer based in Cairo, Egypt. Specializing in React, Next.js, Node.js, and MongoDB.",
 };
 
 export default function RootLayout({
@@ -13,9 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
