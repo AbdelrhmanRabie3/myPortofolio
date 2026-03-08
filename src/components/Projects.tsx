@@ -118,7 +118,7 @@ const projects = [
       "Stripe API",
     ],
     gradient: "from-teal-500 via-emerald-400 to-green-400",
-    iconBg: "bg-teal-500/10",
+    iconBg: "bg-teal-500",
     link: "https://fresh-cart-blush.vercel.app/",
   },
 ];
@@ -139,10 +139,10 @@ export default function Projects() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <AnimatedSection key={project.title} delay={i * 0.1}>
-              <div className="glass-card p-6 h-full flex flex-col group relative">
+              <div className="glass-card p-6 h-full overflow-hidden flex  flex-col group relative">
                 {/* Top accent line */}
                 <div
-                  className={`absolute top-0 left-0 right-0 h-[2px] ${project.iconBg.replace("/10", "")} opacity-40 group-hover:opacity-100 transition-opacity duration-500`}
+                  className={`absolute top-0 left-0  right-0 h-[2px] ${project.iconBg.replace("/10", "")} opacity-40 group-hover:opacity-100 transition-opacity duration-500`}
                 />
 
                 <div className="flex items-center justify-between mb-4 relative">
