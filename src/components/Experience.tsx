@@ -9,7 +9,7 @@ const experiences = [
     type: "work",
     company: "Qusah Stores",
     role: "Software Engineer",
-    period: "Jan 2025 — Present",
+    period: "Jan 2026 — Present",
     description: [
       "Architecting scalable, responsive web applications using React.js and Next.js, serving enterprise-level ERP solutions",
       "Integrating secure RESTful APIs with role-based access control (RBAC), ensuring data protection for multi-tenant systems",
