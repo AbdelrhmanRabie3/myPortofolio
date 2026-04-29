@@ -86,7 +86,7 @@ export default function Contact() {
                 </span>
               </div>
               <div
-                className="p-5 space-y-4 text-sm"
+                className="p-5 space-y-4 text-sm overflow-hidden"
                 style={{ fontFamily: "'JetBrains Mono', monospace" }}
               >
                 <div className="text-text-muted text-xs">
@@ -105,12 +105,15 @@ export default function Contact() {
                           className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
                           style={{ color: line.accent }}
                         />
-                        <div>
+                        <div className="min-w-0">
                           <span className="text-text-muted">
                             &quot;{line.key}&quot;
                           </span>
                           <span className="text-text-secondary">: </span>
-                          <span style={{ color: line.accent }}>
+                          <span
+                            className="break-all"
+                            style={{ color: line.accent }}
+                          >
                             &quot;{line.value}&quot;
                           </span>
                           <span className="text-text-secondary">,</span>
@@ -152,7 +155,7 @@ export default function Contact() {
 
           {/* Right — CTA panel */}
           <AnimatedSection delay={0.2} className="h-full">
-            <div className="glass-card p-8 h-full flex flex-col gap-6">
+            <div className="glass-card p-5 sm:p-8 h-full flex flex-col gap-6">
               <div>
                 <div
                   className="text-text-muted text-[11px] uppercase tracking-widest mb-3"

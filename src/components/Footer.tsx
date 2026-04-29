@@ -17,16 +17,16 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Branding */}
-        <div className="flex items-center gap-3 text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
           <span
             className="text-accent text-lg font-semibold"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
             &gt;_ rabie3
           </span>
-          <span className="w-px h-4 bg-border-subtle" />
+          <span className="hidden sm:block w-px h-4 bg-border-subtle" />
           <span
-            className="text-text-muted text-xs"
+            className="text-text-muted text-xs text-center sm:text-left"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
             © {new Date().getFullYear()} — built by Abdelrahman Rabie

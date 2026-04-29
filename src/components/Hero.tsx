@@ -43,7 +43,7 @@ function useTypewriter(words: string[], speed = 75, pause = 2200) {
 const codeLines = [
   { key: "  name", value: '"Abdelrahman Rabie"', color: "#00ff88" },
   { key: "  role", value: '"Full-Stack Developer"', color: "#00ff88" },
-  { key: "  level", value: '"Senior"', color: "#f97316" },
+  { key: "  level", value: '"Junior"', color: "#f97316" },
   { key: "  location", value: '"Cairo, Egypt 🌍"', color: "#00d4ff" },
   { key: "  status", value: '"Available 🟢"', color: "#00ff88" },
 ];
