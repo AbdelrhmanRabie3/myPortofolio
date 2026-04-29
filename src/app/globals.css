@@ -1,96 +1,529 @@
 @import "tailwindcss";
 
 @theme {
-  --font-heading: "Inter", sans-serif;
+  /* === GAME THEME — CODE CHRONICLES === */
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
-  /* Color palette — Noir & Emerald */
-  --color-bg-primary: rgb(8, 8, 12);
-  --color-bg-secondary: rgb(16, 16, 22);
-  --color-text-primary: rgb(245, 245, 245);
-  --color-text-secondary: rgb(163, 163, 170);
-  --color-text-muted: rgb(113, 113, 122);
-  --color-border-subtle: rgb(39, 39, 42);
-  --color-border-hover: rgb(63, 63, 70);
+  /* Core palette - Cyberpunk/Neofuturism */
+  --color-bg-primary: #04040a;
+  --color-bg-secondary: #080812;
+  --color-bg-card: #0d0d1a;
+  --color-bg-terminal: #060610;
 
-  /* Accent colors */
-  --color-accent: rgb(52, 211, 153);
-  --color-accent-violet: rgb(251, 191, 36);
-  --color-accent-cyan: rgb(56, 189, 248);
-  --color-accent-rose: rgb(251, 113, 133);
-  --color-accent-glow: rgba(52, 211, 153, 0.15);
+  --color-text-primary: #e8e8f2;
+  --color-text-secondary: #8888aa;
+  --color-text-muted: #44445a;
+  --color-text-code: #a8ffcc;
+
+  --color-border-subtle: #1a1a2e;
+  --color-border-hover: #2d2d50;
+
+  /* Neon accents */
+  --color-accent: #00ff88;
+  --color-accent-purple: #7c3aed;
+  --color-accent-cyan: #00d4ff;
+  --color-accent-orange: #f97316;
+  --color-accent-pink: #ff4f8b;
+
+  /* Glows */
+  --color-accent-glow: rgba(0, 255, 136, 0.1);
+  --color-purple-glow: rgba(124, 58, 237, 0.12);
+  --color-cyan-glow: rgba(0, 212, 255, 0.1);
 }
 
+/* === SCROLLBAR === */
 html {
   overflow-x: hidden;
   overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #1a1a2e #04040a;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #04040a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a2e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.4);
 }
 
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-secondary);
   font-family:
-    var(--font-geist-sans, system-ui),
+    "Space Grotesk",
+    system-ui,
     -apple-system,
     sans-serif;
 }
 
-/* Accent text */
+/* === KEYFRAMES === */
+
+/* Glitch effect */
+@keyframes glitch-1 {
+  0%,
+  88%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+  90% {
+    clip-path: inset(8% 0 75% 0);
+    transform: translate(-4px, 2px);
+  }
+  92% {
+    clip-path: inset(55% 0 28% 0);
+    transform: translate(4px, -2px);
+  }
+  94% {
+    clip-path: inset(82% 0 3% 0);
+    transform: translate(-2px, 3px);
+  }
+  96% {
+    clip-path: inset(35% 0 55% 0);
+    transform: translate(3px, -1px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%,
+  88%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  89% {
+    clip-path: inset(62% 0 22% 0);
+    transform: translate(5px, -3px);
+    opacity: 0.8;
+  }
+  91% {
+    clip-path: inset(18% 0 68% 0);
+    transform: translate(-4px, 2px);
+    opacity: 0.8;
+  }
+  93% {
+    clip-path: inset(42% 0 40% 0);
+    transform: translate(3px, -2px);
+    opacity: 0.8;
+  }
+  95% {
+    clip-path: inset(78% 0 8% 0);
+    transform: translate(-3px, 1px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glitch-base {
+  0%,
+  87%,
+  100% {
+    transform: translate(0);
+  }
+  88% {
+    transform: translate(-2px, 1px);
+  }
+  90% {
+    transform: translate(2px, -1px);
+  }
+  92% {
+    transform: translate(-1px, 2px);
+  }
+  94% {
+    transform: translate(1px, -2px);
+  }
+  96% {
+    transform: translate(0);
+  }
+}
+
+/* Cursor blink */
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Neon pulse */
+@keyframes neon-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 5px var(--color-accent),
+      0 0 20px var(--color-accent-glow);
+  }
+  50% {
+    box-shadow:
+      0 0 15px var(--color-accent),
+      0 0 40px var(--color-accent-glow),
+      0 0 60px var(--color-accent-glow);
+  }
+}
+
+/* Float */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Animated grid */
+@keyframes grid-flow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+/* Live dot */
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* XP bar fill */
+@keyframes xp-fill {
+  from {
+    width: 0;
+  }
+}
+
+/* Scan line move */
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* === TYPOGRAPHY UTILITIES === */
+
 .gradient-text {
-  @apply text-accent;
+  background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.gradient-text-warm {
-  @apply text-accent;
+.gradient-text-purple {
+  background: linear-gradient(135deg, #7c3aed 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Card style */
-.glass-card {
-  @apply bg-bg-secondary border border-border-subtle rounded-xl;
+.shimmer-text {
+  background: linear-gradient(90deg, #8888aa 25%, #00ff88 50%, #8888aa 75%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
 }
 
-/* Hidden gradient blobs (classic design) */
-.gradient-blob {
-  @apply hidden;
+/* === GLITCH EFFECT === */
+.glitch-text {
+  position: relative;
+  animation: glitch-base 10s infinite;
 }
 
-/* Section background */
-.aurora-bg {
-  @apply relative;
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* Subtle dot pattern */
+.glitch-text::before {
+  background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glitch-1 10s infinite;
+  z-index: -1;
+}
+
+.glitch-text::after {
+  background: linear-gradient(135deg, #ff4f8b 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glitch-2 10s infinite;
+  z-index: -2;
+}
+
+/* === BACKGROUNDS === */
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-flow 25s linear infinite;
+}
+
 .dot-grid {
   background-image: radial-gradient(
     circle,
-    rgba(52, 211, 153, 0.02) 1px,
+    rgba(0, 255, 136, 0.04) 1px,
     transparent 1px
   );
   background-size: 32px 32px;
 }
 
-/* Section divider */
-.section-divider {
-  @apply h-px bg-border-subtle/30;
+/* === CARDS === */
+
+.glass-card {
+  background: rgba(13, 13, 26, 0.75);
+  border: 1px solid #1a1a2e;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
 }
 
-/* Nav link with indicator */
-.nav-link {
-  @apply relative;
+.glass-card:hover {
+  border-color: rgba(0, 255, 136, 0.2);
+  background: rgba(13, 13, 26, 0.95);
 }
 
-/* Pulse animation for live status */
-@keyframes live-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+/* === TERMINAL === */
+
+.terminal {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  background: var(--color-bg-terminal);
+  border: 1px solid #1a1a2e;
+  border-radius: 10px;
+  overflow: hidden;
 }
+
+.terminal-header {
+  background: #12121f;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid #1a1a2e;
+}
+
+/* === CHAPTER BADGE === */
+
+.chapter-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: rgba(0, 255, 136, 0.05);
+}
+
+/* === GAME BUTTONS === */
+
+.btn-game {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #04040a;
+  background: var(--color-accent);
+  border: none;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px)
+  );
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-game:hover {
+  background: #22ffaa;
+  box-shadow: 0 0 35px rgba(0, 255, 136, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-game-outline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(0, 255, 136, 0.05);
+  border: 1.5px solid rgba(0, 255, 136, 0.65);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px)
+  );
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-game-outline:hover {
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.9);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+/* === XP BARS === */
+
+.xp-bar {
+  height: 4px;
+  background: #1a1a2e;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff88, #00d4ff);
+  border-radius: 2px;
+  position: relative;
+}
+
+.xp-bar-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #00ff88;
+}
+
+/* === UTILITIES === */
 
 .live-pulse {
   animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.float-y {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 136, 0.15),
+    transparent
+  );
+}
+
+.aurora-bg {
+  position: relative;
+}
+
+.gradient-blob {
+  display: none;
+}
+
+.nav-link {
+  position: relative;
+}
+
+/* Scan line overlay */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.015) 2px,
+    rgba(0, 0, 0, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Neon border */
+.neon-border {
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+/* Moving scan line */
+.scan-anim::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 136, 0.3),
+    transparent
+  );
+  animation: scan-line 6s linear infinite;
+  pointer-events: none;
 }
 
 /* Smooth scrolling */

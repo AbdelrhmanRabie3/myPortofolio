@@ -9,131 +9,243 @@ import {
   HiOutlineLocationMarker,
 } from "react-icons/hi";
 
-const contactInfo = [
+const transmissionLines = [
   {
     icon: HiOutlineMail,
-    label: "Email",
+    key: "EMAIL",
     value: "Abdelrhman.mohamed.rabie@gmail.com",
     href: "mailto:Abdelrhman.mohamed.rabie@gmail.com",
-    color: "bg-emerald-500",
-    glow: "rgba(16, 185, 129, 0.2)",
+    accent: "#00ff88",
   },
   {
     icon: HiOutlinePhone,
-    label: "Phone",
+    key: "PHONE",
     value: "+201011676929",
     href: "tel:+201011676929",
-    color: "bg-amber-500",
-    glow: "rgba(245, 158, 11, 0.2)",
+    accent: "#f97316",
   },
   {
     icon: HiOutlineLocationMarker,
-    label: "Location",
+    key: "LOCATION",
     value: "Cairo, Egypt",
     href: null,
-    color: "bg-sky-500",
-    glow: "rgba(14, 165, 233, 0.2)",
-  },
-];
-
-const socialLinks = [
-  {
-    icon: FaGithub,
-    label: "GitHub",
-    href: "https://github.com/AbdelrhmanRabie3",
-  },
-  {
-    icon: FaLinkedin,
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/abdelrhman-rabie/",
+    accent: "#00d4ff",
   },
 ];
 
 export default function Contact() {
   return (
     <section id="contact" className="py-24 md:py-32 relative">
-      <div className="gradient-blob w-[600px] h-[500px] bg-accent bottom-[-200px] right-[-200px]" />
-      <div className="gradient-blob w-[400px] h-[400px] bg-accent-cyan top-[10%] left-[-200px]" />
       <div className="section-divider absolute top-0 left-0 right-0" />
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
-        <AnimatedSection className="text-center mb-16">
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Let&apos;s Build Something{" "}
-            <span className="text-accent">Amazing</span>
-          </h2>
-          <p className="text-text-secondary text-lg max-w-xl mx-auto">
-            I&apos;m always open to new opportunities, collaborations, and
-            interesting projects. Feel free to reach out!
-          </p>
-          <div className="mt-6 flex justify-center gap-1.5">
-            <span className="w-10 h-1 rounded-full bg-accent" />
-            <span className="w-3 h-1 rounded-full bg-accent opacity-70" />
-            <span className="w-2 h-1 rounded-full bg-accent opacity-40" />
+      {/* Radial glow */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        {/* Chapter header */}
+        <AnimatedSection className="mb-14">
+          <div className="flex items-center gap-4 mb-5">
+            <span className="chapter-badge">CHAPTER_05</span>
+            <div className="h-px flex-1 bg-border-subtle" />
           </div>
-        </AnimatedSection>
-
-        <div className="grid md:grid-cols-3 gap-5 mb-10">
-          {contactInfo.map((info, i) => {
-            const Icon = info.icon;
-            const Wrapper = info.href ? "a" : "div";
-            return (
-              <AnimatedSection key={i} delay={i * 0.1}>
-                <Wrapper
-                  {...(info.href ? { href: info.href } : {})}
-                  className="glass-card p-6 text-center group block h-full"
-                  style={{
-                    boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.03)`,
-                  }}
-                >
-                  <div
-                    className={`w-12 h-12 rounded-xl ${info.color} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
-                    style={{ boxShadow: `0 4px 20px ${info.glow}` }}
-                  >
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <p className="text-text-muted text-xs uppercase tracking-wider font-medium mb-1.5">
-                    {info.label}
-                  </p>
-                  <p className="text-text-primary text-sm font-medium break-all">
-                    {info.value}
-                  </p>
-                </Wrapper>
-              </AnimatedSection>
-            );
-          })}
-        </div>
-
-        <AnimatedSection className="flex justify-center gap-4" delay={0.3}>
-          {socialLinks.map((social) => {
-            const Icon = social.icon;
-            return (
-              <Link
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 px-7 py-3.5 rounded-2xl glass-card text-text-secondary hover:text-text-primary transition-all duration-300"
-              >
-                <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium">{social.label}</span>
-              </Link>
-            );
-          })}
-        </AnimatedSection>
-
-        <AnimatedSection className="mt-12 text-center" delay={0.4}>
-          <Link
-            href="mailto:abdelrhman.mohamed.rabie@gmail.com"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-accent hover:bg-accent/90 transition-all duration-300 hover:shadow-xl hover:shadow-accent/20 hover:scale-105"
+          <h2
+            className="font-bold text-text-primary"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: "-0.025em",
+              fontSize: "clamp(2.2rem, 5vw, 4rem)",
+            }}
           >
-            <HiOutlineMail className="w-5 h-5" />
-            Send Me a Message
-          </Link>
+            Establish <span className="gradient-text">Connection</span>
+          </h2>
+          <p className="text-text-secondary mt-2 text-lg max-w-2xl">
+            Ready to collaborate? Drop a transmission and I&apos;ll respond
+            within 24 hours.
+          </p>
         </AnimatedSection>
+
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Left — Terminal transmission */}
+          <AnimatedSection delay={0.1}>
+            <div className="terminal">
+              <div className="terminal-header">
+                <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                <span className="w-3 h-3 rounded-full bg-[#27c840]" />
+                <span
+                  className="ml-4 text-text-muted text-xs"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  contact.sh — rabie3
+                </span>
+              </div>
+              <div
+                className="p-5 space-y-4 text-sm"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                <div className="text-text-muted text-xs">
+                  <span className="text-accent">$</span> cat contact_info.json
+                </div>
+                <div className="space-y-0.5">
+                  <div className="text-text-secondary">{`{`}</div>
+                  {transmissionLines.map((line) => {
+                    const Icon = line.icon;
+                    const content = (
+                      <div
+                        key={line.key}
+                        className="pl-4 flex items-start gap-2"
+                      >
+                        <Icon
+                          className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                          style={{ color: line.accent }}
+                        />
+                        <div>
+                          <span className="text-text-muted">
+                            &quot;{line.key}&quot;
+                          </span>
+                          <span className="text-text-secondary">: </span>
+                          <span style={{ color: line.accent }}>
+                            &quot;{line.value}&quot;
+                          </span>
+                          <span className="text-text-secondary">,</span>
+                        </div>
+                      </div>
+                    );
+
+                    return line.href ? (
+                      <a
+                        key={line.key}
+                        href={line.href}
+                        className="block hover:opacity-80 transition-opacity"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div key={line.key}>{content}</div>
+                    );
+                  })}
+                  <div className="text-text-secondary">{`}`}</div>
+                </div>
+
+                <div className="pt-2 text-text-muted text-xs border-t border-border-subtle">
+                  <span className="text-accent">$</span>{" "}
+                  <span className="text-text-secondary">
+                    echo &quot;Ready to build something great&quot;
+                  </span>
+                  <div className="mt-1 text-accent">
+                    Ready to build something great
+                    <span
+                      className="inline-block w-2 h-3.5 bg-accent ml-1 align-middle"
+                      style={{ animation: "cursor-blink 1s infinite" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Right — CTA panel */}
+          <AnimatedSection delay={0.2}>
+            <div className="glass-card p-8 h-full flex flex-col gap-6">
+              <div>
+                <div
+                  className="text-text-muted text-[11px] uppercase tracking-widest mb-3"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  <span className="text-accent">■</span> quick_actions.sh
+                </div>
+                <p className="text-text-secondary leading-relaxed">
+                  I&apos;m open to{" "}
+                  <span className="text-text-primary font-medium">
+                    new opportunities
+                  </span>
+                  , freelance projects, and exciting collaborations. Let&apos;s
+                  build something{" "}
+                  <span className="text-accent font-medium">amazing</span>{" "}
+                  together.
+                </p>
+              </div>
+
+              {/* Big CTA */}
+              <Link
+                href="mailto:abdelrhman.mohamed.rabie@gmail.com"
+                className="btn-game w-full justify-center text-center"
+              >
+                <HiOutlineMail className="w-4 h-4" />
+                SEND TRANSMISSION
+              </Link>
+
+              {/* Social */}
+              <div className="flex gap-3">
+                {[
+                  {
+                    icon: FaGithub,
+                    label: "GitHub",
+                    href: "https://github.com/AbdelrhmanRabie3",
+                  },
+                  {
+                    icon: FaLinkedin,
+                    label: "LinkedIn",
+                    href: "https://www.linkedin.com/in/abdelrhman-rabie/",
+                  },
+                ].map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <Link
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-text-secondary hover:text-accent transition-all duration-300 text-sm font-medium group"
+                      style={{
+                        border: "1px solid #1a1a2e",
+                        background: "rgba(13,13,26,0.6)",
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                      onMouseEnter={(e) => {
+                        (
+                          e.currentTarget as HTMLAnchorElement
+                        ).style.borderColor = "rgba(0,255,136,0.3)";
+                        (
+                          e.currentTarget as HTMLAnchorElement
+                        ).style.background = "rgba(0,255,136,0.05)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (
+                          e.currentTarget as HTMLAnchorElement
+                        ).style.borderColor = "#1a1a2e";
+                        (
+                          e.currentTarget as HTMLAnchorElement
+                        ).style.background = "rgba(13,13,26,0.6)";
+                      }}
+                    >
+                      <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      {social.label}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Status line */}
+              <div
+                className="flex items-center gap-2 text-text-muted text-xs pt-2 border-t border-border-subtle"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
+                </span>
+                <span>Response time: &lt; 24 hours</span>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
   );

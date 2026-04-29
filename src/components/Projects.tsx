@@ -2,123 +2,102 @@
 
 import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
-import SectionHeading from "./SectionHeading";
-import { HiExternalLink } from "react-icons/hi";
+import { HiExternalLink, HiArrowRight } from "react-icons/hi";
 
 const projects = [
   {
+    file: "FILE_01",
     title: "Sales Hero",
-    status: "Live",
+    status: "ACTIVE",
+    accent: "#00ff88",
     description:
-      "A comprehensive sales management platform designed to streamline customer relationships, track leads, and boost team productivity. Features real-time analytics, automated workflows, and intuitive dashboard interfaces.",
+      "A comprehensive sales management platform designed to streamline customer relationships, track leads, and boost team productivity. Features real-time analytics and intuitive dashboard interfaces.",
     tech: [
       "React",
       "Tailwind CSS",
-      "React Router",
       "Context API",
       "Chart.js",
-      "Zod",
-      "React Hook Form",
       "Zustand",
-      "react-query",
+      "React Query",
+      "Zod",
     ],
-    gradient: "from-emerald-500 via-teal-400 to-cyan-400",
-    iconBg: "bg-emerald-500/10",
     link: "https://sales-hero-fe.vercel.app/ar",
   },
   {
+    file: "FILE_02",
     title: "Thimar",
-    status: "Live",
+    status: "ACTIVE",
+    accent: "#f97316",
     description:
-      "A full-stack responsive bilingual (Arabic & English) company platform built for performance, accessibility, and modern UX. Features server-side rendering, form validation, and a complete RESTful API backend.",
+      "A full-stack responsive bilingual (Arabic & English) company platform built for performance, accessibility, and modern UX. Features SSR, form validation, and a complete RESTful API backend.",
     tech: [
       "Next.js",
       "Tailwind CSS",
-      "Zod",
-      "React Hook Form",
       "Shadcn UI",
       "Node.js",
       "Express.js",
       "MongoDB",
     ],
-    gradient: "from-amber-500 via-yellow-400 to-orange-400",
-    iconBg: "bg-amber-500/10",
     link: "https://thimarln.com",
   },
   {
+    file: "FILE_03",
     title: "DrCorp",
-    status: "Live",
+    status: "ACTIVE",
+    accent: "#00d4ff",
     description:
-      "A bilingual corporate website delivering a polished, accessible experience in both Arabic and English. Focused on performance optimization with SSR, modern component architecture, and seamless API integration.",
+      "A bilingual corporate website delivering a polished, accessible experience in both Arabic and English. Focused on performance optimization with SSR, modern component architecture.",
     tech: [
       "Next.js",
       "Tailwind CSS",
-      "Zod",
-      "React Hook Form",
       "Shadcn UI",
       "Node.js",
       "Express.js",
       "MongoDB",
     ],
-    gradient: "from-sky-500 via-blue-400 to-indigo-400",
-    iconBg: "bg-sky-500/10",
     link: "https://drcorp.co/ar",
   },
   {
+    file: "FILE_04",
     title: "EasyLink",
-    status: "Live",
+    status: "ACTIVE",
+    accent: "#ff4f8b",
     description:
       "A responsive company website focused on performance and modern UX, featuring dynamic routing, clean design patterns, and optimized SEO for maximum discoverability.",
-    tech: [
-      "Next.js",
-      "Tailwind CSS",
-      "Zod",
-      "React Hook Form",
-      "Shadcn UI",
-      "MongoDB",
-      "Node.js",
-      "Express.js",
-    ],
-    gradient: "from-rose-500 via-pink-400 to-fuchsia-400",
-    iconBg: "bg-rose-500/10",
+    tech: ["Next.js", "Tailwind CSS", "Shadcn UI", "MongoDB", "Node.js"],
     link: "https://www.easylink-ksa.com/ar",
   },
   {
+    file: "FILE_05",
     title: "Df3a",
-    status: "Demo",
+    status: "ARCHIVED",
+    accent: "#7c3aed",
     description:
-      "A full-stack mentorship platform connecting students with mentors through real-time chat, session booking, and interactive workshops. Features real-time communication via Socket.IO, LiveKit integration, and AI-powered features.",
+      "A full-stack mentorship platform connecting students with mentors through real-time chat, session booking, and interactive workshops. Features Socket.IO, LiveKit, and AI-powered features.",
     tech: [
       "React",
-      "Tailwind CSS",
-      "React Router",
       "Tanstack Query",
       "Socket.IO",
       "LiveKit",
       "MongoDB",
       "Node.js",
-      "Express.js",
     ],
-    gradient: "from-amber-500 via-orange-400 to-rose-400",
-    iconBg: "bg-amber-500/10",
     link: "https://df3a.vercel.app/",
   },
   {
+    file: "FILE_06",
     title: "Fresh Cart",
-    status: "Demo",
+    status: "ARCHIVED",
+    accent: "#00d4ff",
     description:
-      "A feature-rich e-commerce web application with full shopping cart functionality, secure payment processing via Stripe, protected routes, and toast notifications for a polished user experience.",
+      "A feature-rich e-commerce web application with full shopping cart functionality, secure payment processing via Stripe, protected routes, and toast notifications.",
     tech: [
       "React",
       "Tailwind CSS",
       "React Router DOM",
       "Context API",
-      "Formik",
-      "Yup",
       "Stripe API",
     ],
-    gradient: "from-teal-500 via-emerald-400 to-green-400",
-    iconBg: "bg-teal-500",
     link: "https://fresh-cart-blush.vercel.app/",
   },
 ];
@@ -126,45 +105,93 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects" className="py-24 md:py-32 relative">
-      <div className="gradient-blob w-[500px] h-[500px] bg-accent-cyan bottom-0 left-[-200px]" />
-      <div className="gradient-blob w-[400px] h-[400px] bg-accent-rose top-[10%] right-[-150px]" />
       <div className="section-divider absolute top-0 left-0 right-0" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <SectionHeading
-          title="Featured Projects"
-          subtitle="Real-world applications I've designed and built from the ground up"
-        />
+        {/* Chapter header */}
+        <AnimatedSection className="mb-14">
+          <div className="flex items-center gap-4 mb-5">
+            <span className="chapter-badge">CHAPTER_04</span>
+            <div className="h-px flex-1 bg-border-subtle" />
+          </div>
+          <h2
+            className="font-bold text-text-primary"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: "-0.025em",
+              fontSize: "clamp(2.2rem, 5vw, 4rem)",
+            }}
+          >
+            Mission <span className="gradient-text">Files</span>
+          </h2>
+          <p className="text-text-secondary mt-2 text-lg max-w-2xl">
+            Real-world applications I&apos;ve architected and shipped from the
+            ground up.
+          </p>
+        </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, i) => (
-            <AnimatedSection key={project.title} delay={i * 0.1}>
-              <div className="glass-card p-6 h-full overflow-hidden flex  flex-col group relative">
-                {/* Top accent line */}
+            <AnimatedSection key={project.title} delay={i * 0.08}>
+              <div
+                className="glass-card h-full flex flex-col overflow-hidden relative group"
+                style={{
+                  transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = `${project.accent}35`;
+                  el.style.boxShadow = `0 0 40px ${project.accent}08`;
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = "#1a1a2e";
+                  el.style.boxShadow = "none";
+                }}
+              >
+                {/* Top accent strip */}
                 <div
-                  className={`absolute top-0 left-0  right-0 h-[2px] ${project.iconBg.replace("/10", "")} opacity-40 group-hover:opacity-100 transition-opacity duration-500`}
+                  className="absolute top-0 left-0 right-0 h-[2px] opacity-30 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(90deg, ${project.accent}, transparent)`,
+                  }}
                 />
 
-                <div className="flex items-center justify-between mb-4 relative">
-                  <h3
-                    className="text-xl font-bold text-text-primary group-hover:text-accent transition-all duration-300"
-                    style={{ fontFamily: "var(--font-heading)" }}
-                  >
-                    {project.title}
-                  </h3>
+                {/* Card header */}
+                <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-[10px] uppercase tracking-widest"
+                      style={{
+                        color: project.accent,
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                    >
+                      {project.file}
+                    </span>
+                  </div>
+
+                  {/* Status + Link */}
                   <Link
                     href={project.link}
                     target="_blank"
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
-                      project.status === "Live"
-                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                        : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                    }`}
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full transition-all duration-200 hover:scale-105"
+                    style={{
+                      background:
+                        project.status === "ACTIVE"
+                          ? "rgba(0,255,136,0.1)"
+                          : "rgba(68,68,90,0.2)",
+                      color:
+                        project.status === "ACTIVE" ? "#00ff88" : "#44445a",
+                      border: `1px solid ${project.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(68,68,90,0.3)"}`,
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
                   >
-                    {project.status === "Live" ? (
-                      <span className="relative flex h-2 w-2">
-                        <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                    {project.status === "ACTIVE" ? (
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
                       </span>
                     ) : (
                       <HiExternalLink className="w-3 h-3" />
@@ -173,19 +200,59 @@ export default function Projects() {
                   </Link>
                 </div>
 
-                <p className="text-text-secondary text-sm leading-relaxed mb-5 flex-1">
+                {/* Title */}
+                <div className="px-5 pb-3">
+                  <h3
+                    className="text-text-primary font-bold text-lg group-hover:text-accent transition-colors duration-300"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    {project.title}
+                  </h3>
+                </div>
+
+                {/* Description */}
+                <p className="text-text-secondary text-sm leading-relaxed px-5 pb-4 flex-1">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5">
+                {/* Tech tags */}
+                <div className="px-5 pb-4 flex flex-wrap gap-1.5">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2.5 py-1 rounded-lg text-xs font-medium bg-bg-primary/80 border border-border-subtle/60 text-text-muted hover:text-text-secondary hover:border-border-hover transition-colors duration-200"
+                      className="text-[11px] px-2 py-0.5 rounded text-text-muted"
+                      style={{
+                        border: "1px solid #1a1a2e",
+                        background: "rgba(4,4,10,0.6)",
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
                     >
                       {tech}
                     </span>
                   ))}
+                </div>
+
+                {/* Footer link */}
+                <div
+                  className="border-t border-border-subtle px-5 py-3 flex items-center justify-between"
+                  style={{ background: "rgba(4,4,10,0.3)" }}
+                >
+                  <Link
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs font-medium text-text-muted hover:text-accent transition-colors duration-200 group/link"
+                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  >
+                    VIEW MISSION
+                    <HiArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                  <span
+                    className="text-[10px] text-text-muted"
+                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  >
+                    {project.tech.length} DEPS
+                  </span>
                 </div>
               </div>
             </AnimatedSection>
