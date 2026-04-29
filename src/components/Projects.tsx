@@ -220,10 +220,11 @@ export default function Projects() {
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="text-[11px] px-2 py-0.5 rounded text-text-muted"
+                      className="text-[11px] px-2.5 py-1 rounded text-text-secondary"
                       style={{
-                        border: "1px solid #1a1a2e",
-                        background: "rgba(4,4,10,0.6)",
+                        border: `1px solid ${project.accent}30`,
+                        background: `${project.accent}08`,
+                        color: "#b0b0c8",
                         fontFamily: "'JetBrains Mono', monospace",
                       }}
                     >
@@ -234,15 +235,21 @@ export default function Projects() {
 
                 {/* Footer link */}
                 <div
-                  className="border-t border-border-subtle px-5 py-3 flex items-center justify-between"
-                  style={{ background: "rgba(4,4,10,0.3)" }}
+                  className="border-t px-5 py-3 flex items-center justify-between"
+                  style={{
+                    borderColor: `${project.accent}18`,
+                    background: "rgba(4,4,10,0.4)",
+                  }}
                 >
                   <Link
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs font-medium text-text-muted hover:text-accent transition-colors duration-200 group/link"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    className="flex items-center gap-1.5 text-xs font-semibold hover:gap-2.5 transition-all duration-200 group/link"
+                    style={{
+                      color: project.accent,
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
                   >
                     VIEW MISSION
                     <HiArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />

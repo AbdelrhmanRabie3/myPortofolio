@@ -6,12 +6,7 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 
-const ROLES = [
-  "Full-Stack Developer",
-  "Frontend Engineer",
-  "React Architect",
-  "MERN Specialist",
-];
+const ROLES = ["Full-Stack Developer", "Frontend Engineer", "MERN Specialist"];
 
 function useTypewriter(words: string[], speed = 75, pause = 2200) {
   const [text, setText] = useState("");
