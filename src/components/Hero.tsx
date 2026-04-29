@@ -367,8 +367,12 @@ export default function Hero() {
                     {s.value}
                   </div>
                   <div
-                    className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    className="text-[10px] uppercase tracking-wider mt-0.5"
+                    style={{
+                      color: s.color,
+                      opacity: 0.75,
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
                   >
                     {s.label}
                   </div>
