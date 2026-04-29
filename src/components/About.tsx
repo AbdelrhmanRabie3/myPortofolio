@@ -99,7 +99,7 @@ export default function About() {
           </p>
         </AnimatedSection>
 
-        <div className="grid lg:grid-cols-5 gap-10 items-start">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
           {/* ── Story Cards (3/5) ── */}
           <div className="lg:col-span-3 space-y-5">
             {storyCards.map((card, i) => (
@@ -123,15 +123,18 @@ export default function About() {
 
             {/* Stats row */}
             <AnimatedSection delay={0.4}>
-              <div className="grid grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
                 {[
                   { value: "2+", label: "Years Exp", color: "#00ff88" },
                   { value: "5+", label: "Live Projects", color: "#00d4ff" },
                   { value: "15+", label: "Technologies", color: "#7c3aed" },
                 ].map((stat) => (
-                  <div key={stat.label} className="glass-card p-4 text-center">
+                  <div
+                    key={stat.label}
+                    className="glass-card p-3 sm:p-4 text-center"
+                  >
                     <div
-                      className="text-3xl font-bold"
+                      className="text-2xl sm:text-3xl font-bold"
                       style={{
                         color: stat.color,
                         fontFamily: "'Space Grotesk', sans-serif",
@@ -139,7 +142,7 @@ export default function About() {
                     >
                       {stat.value}
                     </div>
-                    <div className="text-text-muted text-xs uppercase tracking-wider mt-1">
+                    <div className="text-text-muted text-[10px] sm:text-xs uppercase tracking-wider mt-1">
                       {stat.label}
                     </div>
                   </div>

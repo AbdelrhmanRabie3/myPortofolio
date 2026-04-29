@@ -183,7 +183,7 @@ export default function Projects() {
                           ? "rgba(0,255,136,0.1)"
                           : "rgba(68,68,90,0.2)",
                       color:
-                        project.status === "ACTIVE" ? "#00ff88" : "#44445a",
+                        project.status === "ACTIVE" ? "#00ff88" : "#7a7a9a",
                       border: `1px solid ${project.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(68,68,90,0.3)"}`,
                       fontFamily: "'JetBrains Mono', monospace",
                     }}

@@ -153,19 +153,19 @@ export default function Skills() {
                 >
                   {/* Card header */}
                   <div
-                    className="flex items-center justify-between px-5 py-4 border-b border-border-subtle"
+                    className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 border-b border-border-subtle"
                     style={{ background: `${cat.accent}08` }}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                       <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center"
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                         style={{
                           background: `${cat.accent}18`,
                           border: `1px solid ${cat.accent}30`,
                         }}
                       >
                         <CatIcon
-                          className="w-4 h-4"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                           style={{ color: cat.accent }}
                         />
                       </div>
@@ -176,33 +176,25 @@ export default function Skills() {
                         {cat.title}
                       </h3>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="text-[10px] uppercase tracking-widest"
-                        style={{
-                          color: cat.accent,
-                          fontFamily: "'JetBrains Mono', monospace",
-                        }}
-                      >
-                        {cat.num}
-                      </span>
-                      <span
-                        className="text-[10px] text-text-muted"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        {cat.file}
-                      </span>
-                    </div>
+                    <span
+                      className="text-[10px] uppercase tracking-widest flex-shrink-0"
+                      style={{
+                        color: cat.accent,
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                    >
+                      {cat.num}
+                    </span>
                   </div>
 
                   {/* Skill slots */}
-                  <div className="p-5 flex flex-wrap gap-2.5">
+                  <div className="p-4 sm:p-5 flex flex-wrap gap-2">
                     {cat.skills.map((skill) => {
                       const SkillIcon = skill.icon;
                       return (
                         <span
                           key={skill.name}
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-text-secondary text-sm font-medium transition-all duration-300 cursor-default select-none"
+                          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-text-secondary text-xs sm:text-sm font-medium transition-all duration-300 cursor-default select-none"
                           style={{
                             background: "rgba(13,13,26,0.8)",
                             border: "1px solid #1a1a2e",
@@ -221,7 +213,7 @@ export default function Skills() {
                           }}
                         >
                           <SkillIcon
-                            className="w-3.5 h-3.5 flex-shrink-0"
+                            className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0"
                             style={{ color: cat.accent }}
                           />
                           {skill.name}

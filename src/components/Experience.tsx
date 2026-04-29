@@ -94,7 +94,7 @@ export default function Experience() {
           <div className="space-y-8">
             {experiences.map((exp, i) => (
               <AnimatedSection key={i} delay={i * 0.12}>
-                <div className="flex gap-6 md:gap-8 group">
+                <div className="flex gap-3 sm:gap-6 md:gap-8 group">
                   {/* Quest marker */}
                   <div className="relative flex-shrink-0 flex flex-col items-center">
                     <div
@@ -132,7 +132,7 @@ export default function Experience() {
                   </div>
 
                   {/* Quest card */}
-                  <div className="glass-card p-6 flex-1 group-hover:border-opacity-50 transition-all duration-300">
+                  <div className="glass-card p-4 sm:p-6 flex-1 min-w-0 group-hover:border-opacity-50 transition-all duration-300">
                     {/* Card top row */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                       <div>
@@ -153,10 +153,10 @@ export default function Experience() {
                               background:
                                 exp.status === "ACTIVE"
                                   ? "rgba(0,255,136,0.1)"
-                                  : "rgba(68,68,90,0.3)",
+                                  : "rgba(68,68,90,0.2)",
                               color:
-                                exp.status === "ACTIVE" ? "#00ff88" : "#44445a",
-                              border: `1px solid ${exp.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(68,68,90,0.4)"}`,
+                                exp.status === "ACTIVE" ? "#00ff88" : "#7a7a9a",
+                              border: `1px solid ${exp.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(120,120,160,0.25)"}`,
                               fontFamily: "'JetBrains Mono', monospace",
                             }}
                           >
@@ -187,7 +187,7 @@ export default function Experience() {
                       </div>
 
                       <span
-                        className="text-text-muted text-xs px-3 py-1.5 rounded-lg whitespace-nowrap self-start"
+                        className="text-text-muted text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg whitespace-nowrap self-start flex-shrink-0"
                         style={{
                           border: "1px solid #1a1a2e",
                           background: "rgba(4,4,10,0.6)",
