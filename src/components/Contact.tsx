@@ -70,10 +70,10 @@ export default function Contact() {
           </p>
         </AnimatedSection>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
           {/* Left — Terminal transmission */}
-          <AnimatedSection delay={0.1}>
-            <div className="terminal">
+          <AnimatedSection delay={0.1} className="h-full">
+            <div className="terminal h-full flex flex-col">
               <div className="terminal-header">
                 <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
                 <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
@@ -151,7 +151,7 @@ export default function Contact() {
           </AnimatedSection>
 
           {/* Right — CTA panel */}
-          <AnimatedSection delay={0.2}>
+          <AnimatedSection delay={0.2} className="h-full">
             <div className="glass-card p-8 h-full flex flex-col gap-6">
               <div>
                 <div
