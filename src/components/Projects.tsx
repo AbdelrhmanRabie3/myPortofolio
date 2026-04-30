@@ -13,7 +13,7 @@ const projects = [
     description:
       "A comprehensive sales management platform designed to streamline customer relationships, track leads, and boost team productivity. Features real-time analytics and intuitive dashboard interfaces.",
     tech: [
-      "React",
+      "Next.js",
       "Tailwind CSS",
       "Context API",
       "Chart.js",
