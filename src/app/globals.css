@@ -220,6 +220,114 @@ section[id],
   }
 }
 
+@keyframes scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+/* === ENTRY ANIMATIONS =====================================================
+   These replace the framer-motion `initial`/`animate` pairs that used to drive
+   the hero and navbar. That version served every above-the-fold element to the
+   browser at `opacity: 0` and only revealed it once React had hydrated — so the
+   first paint was an empty page and FCP/LCP were gated on the JS bundle.
+
+   As CSS, the identical animation starts on the very first frame with no JS at
+   all. Each keyframe declares only `from`; the resting state is the element's
+   own computed style, and `animation-fill-mode: backwards` holds the start
+   state through the delay. */
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--enter-y, 20px));
+  }
+}
+
+@keyframes enter-down {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--enter-y, 20px)));
+  }
+}
+
+@keyframes enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--enter-x, 12px)));
+  }
+}
+
+@keyframes enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(var(--enter-x, 50px));
+  }
+}
+
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.enter {
+  animation-duration: var(--enter-dur, 0.6s);
+  animation-delay: var(--enter-delay, 0s);
+  animation-timing-function: cubic-bezier(0.16, 0.84, 0.44, 1);
+  animation-fill-mode: backwards;
+}
+
+.enter-up {
+  animation-name: enter-up;
+}
+.enter-down {
+  animation-name: enter-down;
+}
+.enter-left {
+  animation-name: enter-left;
+}
+.enter-right {
+  animation-name: enter-right;
+}
+.enter-fade {
+  animation-name: enter-fade;
+}
+
+/* === SCROLL REVEAL ========================================================
+   The on-scroll counterpart, driven by AnimatedSection's IntersectionObserver
+   (one class flip) instead of a framer-motion subscription per element. Every
+   `.reveal` sits below the fold, so starting hidden costs nothing on LCP. */
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--reveal-delay, 0s),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--reveal-delay, 0s);
+}
+
+.reveal-bottom {
+  transform: translateY(40px);
+}
+.reveal-left {
+  transform: translateX(-40px);
+}
+.reveal-right {
+  transform: translateX(40px);
+}
+.reveal-scale {
+  transform: scale(0.94);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* === TYPOGRAPHY UTILITIES === */
 
 .gradient-text {
@@ -559,6 +667,19 @@ section[id],
   position: relative;
 }
 
+/* Fills only once the surrounding AnimatedSection scrolls into view — the CSS
+   equivalent of the old `whileInView` width tween. The target width is the
+   inline `width` on the element; this animates up to it from zero. */
+@keyframes xp-fill {
+  from {
+    width: 0;
+  }
+}
+
+.is-visible .xp-bar-fill {
+  animation: xp-fill 1.2s cubic-bezier(0.16, 0.84, 0.44, 1) 0.4s backwards;
+}
+
 .xp-bar-fill::after {
   content: "";
   position: absolute;
@@ -569,6 +690,32 @@ section[id],
   background: white;
   border-radius: 2px;
   box-shadow: 0 0 8px #00ff88;
+}
+
+/* === MOBILE MENU OVERLAY ===
+   Replaces AnimatePresence. Enter runs on mount; the exit animation is driven
+   by `.is-closing`, and Navbar delays the unmount by the same 400ms. */
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes menu-out {
+  to {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+.menu-overlay {
+  animation: menu-in 0.4s ease-in-out both;
+}
+
+.menu-overlay.is-closing {
+  animation: menu-out 0.4s ease-in-out both;
 }
 
 /* === UTILITIES === */
@@ -608,6 +755,20 @@ section[id],
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    /* Zero the delays too. Collapsing only the durations would still leave the
+       staggered hero elements invisible for up to 2.5s, since a `backwards`
+       fill holds the hidden start state for the whole delay. */
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Fade in place rather than sliding — matches the old reduced-motion branch,
+     which dropped the directional offsets and kept opacity only. */
+  .reveal-bottom,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    transform: none;
   }
 
   .accent-card:hover,

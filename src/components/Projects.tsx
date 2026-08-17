@@ -1,9 +1,6 @@
-"use client";
-
-import Link from "next/link";
-import Image from "next/image";
-import { useState, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import AnimatedSection from "./AnimatedSection";
+import ProjectThumb from "./ProjectThumb";
 import { HiArrowRight } from "react-icons/hi";
 
 type Project = {
@@ -124,43 +121,6 @@ const projects: Project[] = [
   },
 ];
 
-/** First letters of the project name — the placeholder mark until a real
- *  screenshot exists at `image`. */
-function monogram(title: string) {
-  return title
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-}
-
-/** Renders the screenshot, falling back to the accent monogram when the file
- *  is missing or fails to load — so an absent or misnamed image degrades to
- *  the placeholder instead of a broken card. */
-function ThumbMedia({ project }: { project: Project }) {
-  const [failed, setFailed] = useState(false);
-
-  if (!project.image || failed) {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="project-monogram">{monogram(project.title)}</span>
-      </div>
-    );
-  }
-
-  return (
-    <Image
-      src={project.image}
-      alt={`${project.title} screenshot`}
-      fill
-      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      className="object-cover object-top"
-      onError={() => setFailed(true)}
-    />
-  );
-}
-
 export default function Projects() {
   return (
     <section id="projects" className="py-24 md:py-32 relative">
@@ -198,7 +158,7 @@ export default function Projects() {
               >
                 {/* Thumbnail — screenshot when present, accent placeholder otherwise */}
                 <div className="project-thumb">
-                  <ThumbMedia project={project} />
+                  <ProjectThumb title={project.title} image={project.image} />
 
                   {/* Overlay chrome — pointer-events off so the whole card
                       stays clickable through the stretched link beneath it. */}
@@ -237,7 +197,7 @@ export default function Projects() {
                     className="text-text-primary font-bold text-lg"
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
-                    <Link
+                    <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -245,7 +205,7 @@ export default function Projects() {
                     >
                       {project.title}
                       <span className="sr-only"> — open live site</span>
-                    </Link>
+                    </a>
                   </h3>
                 </div>
 

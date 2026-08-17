@@ -1,5 +1,3 @@
-"use client";
-
 import type { CSSProperties } from "react";
 import AnimatedSection from "./AnimatedSection";
 import { HiBriefcase, HiAcademicCap, HiCheckCircle } from "react-icons/hi";

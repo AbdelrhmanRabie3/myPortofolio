@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 
@@ -144,10 +141,113 @@ export default function About() {
                 </div>
               </AnimatedSection>
             ))}
+          </div>
 
-            {/* Stats row */}
-            <AnimatedSection delay={0.4}>
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
+          {/* ── Character Card + Stats (2/5) ──
+              `sticky` lives on the wrapper, not the card: `items-start` sizes
+              each grid column to its own content, so a sticky child of a
+              content-height column has no room to travel. Sticking the wrapper
+              keeps the card and the stat tiles moving as one unit. */}
+          <AnimatedSection className="lg:col-span-2" delay={0.3}>
+            <div className="sticky top-24 space-y-5">
+              <div
+                className="glass-card p-6"
+                style={{ boxShadow: "0 0 40px rgba(0,255,136,0.04)" }}
+              >
+                {/* Header */}
+                <div
+                  className="text-text-muted text-[11px] uppercase tracking-widest mb-5 flex items-center gap-2"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  <span className="text-accent">■</span> CHARACTER_PROFILE.json
+                </div>
+
+                {/* Avatar */}
+                <div className="flex justify-center mb-6">
+                  <div className="relative">
+                    <div
+                      className="w-44 h-44 rounded-2xl overflow-hidden"
+                      style={{
+                        border: "2px solid rgba(0,255,136,0.4)",
+                        boxShadow: "0 0 40px rgba(0,255,136,0.15)",
+                      }}
+                    >
+                      <Image
+                        src="/me.jpeg"
+                        alt="Abdelrahman Rabie"
+                        width={176}
+                        height={176}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                    <div
+                      className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded text-[10px] font-bold"
+                      style={{
+                        background: "#00ff88",
+                        color: "#04040a",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      LVL 2
+                    </div>
+                  </div>
+                </div>
+
+                {/* Profile Stats */}
+                <div
+                  className="space-y-2.5 text-sm"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {profileStats.map((item) => (
+                    <div
+                      key={item.key}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-text-muted text-xs">
+                        {item.key}
+                      </span>
+                      <span
+                        style={{ color: item.color }}
+                        className="text-xs text-right"
+                      >
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+
+                  <div className="h-px bg-border-subtle my-3" />
+
+                  {/* XP Bars */}
+                  <div className="space-y-3">
+                    <div className="text-[10px] text-text-muted uppercase tracking-widest mb-1">
+                      Skill Levels
+                    </div>
+                    {xpBars.map((bar) => (
+                      <div key={bar.skill}>
+                        <div className="flex justify-between text-[11px] mb-1.5">
+                          <span className="text-text-secondary">
+                            {bar.skill}
+                          </span>
+                          <span className="text-accent">{bar.xp} XP</span>
+                        </div>
+                        <div className="xp-bar">
+                          {/* Grows from 0 to this width via the `xp-fill`
+                            keyframes, which only run once the surrounding
+                            AnimatedSection picks up `.is-visible`. */}
+                          <div
+                            className="xp-bar-fill"
+                            style={{ width: `${bar.xp}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats row — moved out of the story column, which ran far
+                  longer than this one and left this side ending early. */}
+              <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 {[
                   { value: "2+", label: "Years Exp", color: "#00ff88" },
                   { value: "6", label: "Live Projects", color: "#00d4ff" },
@@ -166,109 +266,13 @@ export default function About() {
                     >
                       {stat.value}
                     </div>
-                    <div className="text-text-muted text-[10px] sm:text-xs uppercase tracking-wider mt-1">
+                    {/* Held at 10px: the column is ~130px per tile here, and
+                        at 12px "LIVE PROJECTS" wraps and unbalances the row. */}
+                    <div className="text-text-muted text-[10px] uppercase tracking-wider mt-1">
                       {stat.label}
                     </div>
                   </div>
                 ))}
-              </div>
-            </AnimatedSection>
-          </div>
-
-          {/* ── Character Card (2/5) ── */}
-          <AnimatedSection className="lg:col-span-2" delay={0.3}>
-            <div
-              className="glass-card p-6 sticky top-24"
-              style={{ boxShadow: "0 0 40px rgba(0,255,136,0.04)" }}
-            >
-              {/* Header */}
-              <div
-                className="text-text-muted text-[11px] uppercase tracking-widest mb-5 flex items-center gap-2"
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                <span className="text-accent">■</span> CHARACTER_PROFILE.json
-              </div>
-
-              {/* Avatar */}
-              <div className="flex justify-center mb-6">
-                <div className="relative">
-                  <div
-                    className="w-44 h-44 rounded-2xl overflow-hidden"
-                    style={{
-                      border: "2px solid rgba(0,255,136,0.4)",
-                      boxShadow: "0 0 40px rgba(0,255,136,0.15)",
-                    }}
-                  >
-                    <Image
-                      src="/me.jpeg"
-                      alt="Abdelrahman Rabie"
-                      width={176}
-                      height={176}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <div
-                    className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded text-[10px] font-bold"
-                    style={{
-                      background: "#00ff88",
-                      color: "#04040a",
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    LVL 2
-                  </div>
-                </div>
-              </div>
-
-              {/* Profile Stats */}
-              <div
-                className="space-y-2.5 text-sm"
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                {profileStats.map((item) => (
-                  <div
-                    key={item.key}
-                    className="flex items-center justify-between"
-                  >
-                    <span className="text-text-muted text-xs">{item.key}</span>
-                    <span
-                      style={{ color: item.color }}
-                      className="text-xs text-right"
-                    >
-                      {item.value}
-                    </span>
-                  </div>
-                ))}
-
-                <div className="h-px bg-border-subtle my-3" />
-
-                {/* XP Bars */}
-                <div className="space-y-3">
-                  <div className="text-[10px] text-text-muted uppercase tracking-widest mb-1">
-                    Skill Levels
-                  </div>
-                  {xpBars.map((bar) => (
-                    <div key={bar.skill}>
-                      <div className="flex justify-between text-[11px] mb-1.5">
-                        <span className="text-text-secondary">{bar.skill}</span>
-                        <span className="text-accent">{bar.xp} XP</span>
-                      </div>
-                      <div className="xp-bar">
-                        <motion.div
-                          className="xp-bar-fill"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${bar.xp}%` }}
-                          transition={{
-                            duration: 1.2,
-                            ease: "easeOut",
-                            delay: 0.4,
-                          }}
-                          viewport={{ once: true }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </AnimatedSection>

@@ -4,9 +4,11 @@ import "./globals.css";
 
 /* Self-hosted at build time: no render-blocking request to Google, no FOUT,
    and `adjustFontFallback` removes the layout shift on swap. */
+/* Weights are limited to the ones actually referenced (font-medium /
+   font-semibold / font-bold plus body text). 300 was shipped but never used. */
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-space-grotesk",
   display: "swap",
 });
@@ -75,7 +77,15 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {/* Scroll reveals are driven by an IntersectionObserver, so without JS
+            nothing would ever flip `.is-visible` and the page below the hero
+            would stay blank. Show it all instead. */}
+        <noscript>
+          <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }

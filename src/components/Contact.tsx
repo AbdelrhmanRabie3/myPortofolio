@@ -1,6 +1,3 @@
-"use client";
-
-import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
@@ -176,13 +173,13 @@ export default function Contact() {
               </div>
 
               {/* Big CTA */}
-              <Link
+              <a
                 href="mailto:abdelrhman.mohamed.rabie@gmail.com"
                 className="btn-game w-full justify-center text-center"
               >
                 <HiOutlineMail className="w-4 h-4" />
                 SEND TRANSMISSION
-              </Link>
+              </a>
 
               {/* Social */}
               <div className="flex gap-3">
@@ -200,7 +197,7 @@ export default function Contact() {
                 ].map((social) => {
                   const Icon = social.icon;
                   return (
-                    <Link
+                    <a
                       key={social.label}
                       href={social.href}
                       target="_blank"
@@ -210,7 +207,7 @@ export default function Contact() {
                     >
                       <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                       {social.label}
-                    </Link>
+                    </a>
                   );
                 })}
               </div>
