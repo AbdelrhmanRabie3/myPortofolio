@@ -13,12 +13,13 @@ const experiences = [
     status: "ACTIVE",
     accent: "#00ff88",
     description: [
-      "Architecting scalable, responsive web applications using React.js and Next.js, serving enterprise-level ERP solutions",
-      "Integrating secure RESTful APIs with role-based access control (RBAC), ensuring data protection for multi-tenant systems",
-      "Optimizing application performance, maintainability, and reliability — delivering measurable improvements in load times",
-      "Collaborating with cross-functional teams to align technical solutions with business goals",
+      "Building and shipping scalable React.js and Next.js applications for enterprise ERP and e-commerce products, working across the front end and the API layer",
+      "Developing custom Salla storefront themes and apps on the Twilight engine — product, cart, and checkout flows — for Saudi retail clients",
+      "Consuming REST APIs with JWT authentication and role-based access control, gating both data fetching and client-side UI by user role",
+      "Improving performance, reliability, and maintainability through component refactoring, image optimization, and deliberate rendering strategy (SSR / ISR)",
+      "Collaborating with cross-functional teams to deliver features aligned with business requirements, in an Agile workflow using Jira and ClickUp",
     ],
-    tech: ["React.js", "Next.js", "RBAC", "REST API"],
+    tech: ["Next.js", "React.js", "Salla / Twilight", "RBAC", "SSR / ISR"],
   },
   {
     quest: "QUEST_02",
@@ -29,26 +30,56 @@ const experiences = [
     status: "COMPLETED",
     accent: "#00d4ff",
     description: [
-      "Built responsive, high-performance UIs with React.js, Next.js, and Tailwind CSS for a bilingual platform",
-      "Designed and integrated RESTful APIs with secure authentication and RBAC for enterprise data workflows",
-      "Drove performance optimization and SEO improvements, boosting visibility and user engagement",
+      "Designed and built REST APIs in Node.js and Express following an MVC architecture, with MongoDB / Mongoose schema modelling and validation",
+      "Implemented JWT authentication and role-based access control, protecting API routes by role and mirroring the same permissions in the UI",
+      "Built bilingual (Arabic / English) Next.js front ends with full RTL support — layout mirroring, locale-aware routing, and font switching",
+      "Shared a single Zod schema across client and server to validate forms in one place instead of two",
+      "Improved SEO and page load through server-side rendering, structured metadata, and image optimization",
     ],
-    tech: ["Next.js", "Tailwind CSS", "Node.js", "MongoDB"],
+    tech: ["Next.js", "Node.js", "Express.js", "MongoDB", "Zod", "i18n / RTL"],
   },
   {
     quest: "QUEST_03",
     type: "education",
-    company: "ITI — Information Technology Institute",
-    role: "Full-Stack Web Development (MERN Track)",
+    company: "ITI — Information Technology Institute, Mansoura",
+    role: "Intensive Training Program — Full-Stack Web Development (MERN)",
     period: "Feb 2025 — Jul 2025",
     status: "COMPLETED",
     accent: "#7c3aed",
     description: [
       "Completed intensive training covering the full MERN stack — React, Node.js, Express.js, MongoDB",
       "Built real-world projects with modern tooling: Next.js, Tailwind CSS, Zod, React Hook Form, Shadcn UI",
-      "Served as MERN Stack Track Leader, guiding peers through complex concepts and fostering collaboration",
+      "Selected as MERN Stack Track Leader for the cohort, guiding peers through complex concepts and fostering collaboration",
     ],
     tech: ["MERN", "Next.js", "Shadcn UI", "React Hook Form"],
+  },
+  {
+    quest: "QUEST_04",
+    type: "education",
+    company: "Route Academy",
+    role: "Front-End Diploma",
+    period: "Sep 2024 — Feb 2025",
+    status: "COMPLETED",
+    accent: "#f97316",
+    description: [
+      "Built a rigorous front-end foundation — HTML5, CSS3, JavaScript (ES6+), Bootstrap, and React.js",
+      "Shipped hands-on projects covering responsive layouts, component architecture, and API integration",
+    ],
+    tech: ["JavaScript", "React.js", "CSS3", "Bootstrap"],
+  },
+  {
+    quest: "QUEST_05",
+    type: "education",
+    company: "Mansoura University",
+    role: "B.Sc. Electronics & Communications Engineering",
+    period: "2019 — 2024",
+    status: "COMPLETED",
+    accent: "#ff4f8b",
+    description: [
+      "Graduated with Excellent honours — cumulative grade 88.67%, graduation project rated Excellent",
+      "Served as ECE Department Administrative Coordinator (2020–2024), organising departmental activities alongside full-time study",
+    ],
+    tech: ["Engineering", "Problem Solving", "Leadership"],
   },
 ];
 
@@ -75,7 +106,8 @@ export default function Experience() {
             Quest <span className="gradient-text">Log</span>
           </h2>
           <p className="text-text-secondary mt-2 text-lg max-w-2xl">
-            My professional journey — each role a new level unlocked.
+            My professional journey and training — each role a new level
+            unlocked.
           </p>
         </AnimatedSection>
 
@@ -86,7 +118,7 @@ export default function Experience() {
             className="absolute left-5 md:left-[26px] top-2 bottom-2 w-px"
             style={{
               background:
-                "linear-gradient(to bottom, #00ff88, #00d4ff, #7c3aed)",
+                "linear-gradient(to bottom, #00ff88, #00d4ff, #7c3aed, #f97316, #ff4f8b)",
               opacity: 0.25,
             }}
           />

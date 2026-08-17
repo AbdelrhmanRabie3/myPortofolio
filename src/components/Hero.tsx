@@ -6,7 +6,12 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 
-const ROLES = ["Full-Stack Developer", "Frontend Engineer", "MERN Specialist"];
+const ROLES = [
+  "Full-Stack Developer",
+  "MERN Stack Engineer",
+  "Next.js Specialist",
+  "Salla Theme Developer",
+];
 
 function useTypewriter(words: string[], speed = 75, pause = 2200) {
   const [text, setText] = useState("");
@@ -43,12 +48,12 @@ function useTypewriter(words: string[], speed = 75, pause = 2200) {
 const codeLines = [
   { key: "  name", value: '"Abdelrahman Rabie"', color: "#00ff88" },
   { key: "  role", value: '"Full-Stack Developer"', color: "#00ff88" },
-  { key: "  level", value: '"Junior"', color: "#f97316" },
+  { key: "  company", value: '"Qusah Stores"', color: "#f97316" },
   { key: "  location", value: '"Cairo, Egypt 🌍"', color: "#00d4ff" },
   { key: "  status", value: '"Available 🟢"', color: "#00ff88" },
 ];
 
-const stackItems = ["React", "Next.js", "Node.js", "MongoDB"];
+const stackItems = ["React", "Next.js", "Node.js", "MongoDB", "Salla"];
 
 export default function Hero() {
   const role = useTypewriter(ROLES);
@@ -151,12 +156,12 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.34 }}
               className="text-text-secondary text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-9 leading-relaxed"
             >
-              Crafting high-performance web applications with{" "}
-              <span className="text-text-primary font-medium">MERN stack</span>.
-              Passionate about{" "}
-              <span className="text-accent font-medium">clean code</span>,
-              intuitive UX, and turning complex problems into elegant digital
-              experiences.
+              Building enterprise ERP and e-commerce products with the{" "}
+              <span className="text-text-primary font-medium">MERN stack</span>{" "}
+              and Next.js — plus custom{" "}
+              <span className="text-accent font-medium">Salla storefronts</span>{" "}
+              for Saudi retail brands. Obsessed with clean architecture,
+              performance, and bilingual Arabic/English UX.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -349,8 +354,8 @@ export default function Hero() {
             >
               {[
                 { label: "EXP", value: "2+ YRS", color: "#00ff88" },
-                { label: "PROJECTS", value: "5+", color: "#00d4ff" },
-                { label: "TECH", value: "15+", color: "#7c3aed" },
+                { label: "PROJECTS", value: "6", color: "#00d4ff" },
+                { label: "TECH", value: "20+", color: "#7c3aed" },
               ].map((s) => (
                 <div
                   key={s.label}

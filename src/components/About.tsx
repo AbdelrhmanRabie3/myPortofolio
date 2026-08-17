@@ -15,12 +15,14 @@ const storyCards = [
           Full-Stack MERN Developer
         </span>{" "}
         based in <span className="text-accent font-semibold">Cairo, Egypt</span>
-        , with a deep passion for building web applications that are not only
-        functional but genuinely delightful to use — with a sharp focus on{" "}
+        , currently a Software Engineer at{" "}
+        <span className="text-text-primary font-semibold">Qusah Stores</span>. I
+        build{" "}
         <span className="text-accent-cyan font-semibold">
-          frontend excellence
-        </span>
-        .
+          scalable, high-performance
+        </span>{" "}
+        web applications end to end — from responsive React interfaces to the
+        secure APIs behind them.
       </>
     ),
   },
@@ -29,14 +31,35 @@ const storyCards = [
     borderColor: "#7c3aed",
     text: (
       <>
-        Through intensive training at{" "}
-        <span className="text-text-primary font-semibold">ITI</span>{" "}
-        (Information Technology Institute) and hands-on experience at{" "}
-        <span className="text-text-primary font-semibold">Qusah Stores</span>{" "}
-        and <span className="text-text-primary font-semibold">DrCorp</span>,
-        I&apos;ve honed my ability to architect scalable, enterprise-grade
-        applications — from responsive React frontends to secure Node.js APIs
-        and MongoDB databases.
+        My path ran from a{" "}
+        <span className="text-text-primary font-semibold">
+          B.Sc. in Electronics &amp; Communications Engineering
+        </span>{" "}
+        at Mansoura University (Excellent with Honors) through the{" "}
+        <span className="text-text-primary font-semibold">Route Academy</span>{" "}
+        front-end diploma and the intensive MERN program at{" "}
+        <span className="text-text-primary font-semibold">ITI</span> — then
+        straight into shipping production systems at{" "}
+        <span className="text-text-primary font-semibold">DrCorp</span> and{" "}
+        <span className="text-text-primary font-semibold">Qusah Stores</span>.
+      </>
+    ),
+  },
+  {
+    file: "// commerce_module.md",
+    borderColor: "#ff4f8b",
+    text: (
+      <>
+        Day to day I work across enterprise{" "}
+        <span className="text-text-primary font-semibold">ERP</span> products
+        and{" "}
+        <span className="text-accent font-semibold">
+          custom Salla storefronts
+        </span>{" "}
+        — building themes from scratch on the Twilight engine for Saudi retail
+        brands, covering product, cart, and checkout flows in fully{" "}
+        <span className="text-accent-cyan font-semibold">Arabic / RTL</span>{" "}
+        interfaces.
       </>
     ),
   },
@@ -61,14 +84,15 @@ const storyCards = [
 const profileStats = [
   { key: "Name", value: "Abdelrahman Rabie", color: "#e8e8f2" },
   { key: "Role", value: "Full-Stack Dev", color: "#00ff88" },
-  { key: "Specialty", value: "Frontend Focus", color: "#00d4ff" },
+  { key: "Specialty", value: "MERN + Salla", color: "#00d4ff" },
   { key: "Location", value: "Cairo, Egypt", color: "#8888aa" },
   { key: "Status", value: "🟢 Available for hire", color: "#00ff88" },
 ];
 
 const xpBars = [
   { skill: "Frontend", xp: 92 },
-  { skill: "Backend", xp: 78 },
+  { skill: "Backend", xp: 80 },
+  { skill: "Salla / Twilight", xp: 85 },
   { skill: "UI / UX", xp: 85 },
 ];
 
@@ -126,8 +150,8 @@ export default function About() {
               <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
                 {[
                   { value: "2+", label: "Years Exp", color: "#00ff88" },
-                  { value: "5+", label: "Live Projects", color: "#00d4ff" },
-                  { value: "15+", label: "Technologies", color: "#7c3aed" },
+                  { value: "6", label: "Live Projects", color: "#00d4ff" },
+                  { value: "20+", label: "Technologies", color: "#7c3aed" },
                 ].map((stat) => (
                   <div
                     key={stat.label}
