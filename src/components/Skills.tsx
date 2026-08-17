@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import AnimatedSection from "./AnimatedSection";
 import {
   SiReact,
@@ -60,7 +61,6 @@ const skillCategories = [
     title: "Front-End",
     file: "frontend.ts",
     accent: "#00ff88",
-    glow: "rgba(0,255,136,0.08)",
     icon: HiTemplate,
     skills: [
       { name: "React.js", icon: SiReact },
@@ -81,7 +81,6 @@ const skillCategories = [
     title: "UI & Styling",
     file: "styling.css",
     accent: "#00d4ff",
-    glow: "rgba(0,212,255,0.08)",
     icon: HiColorSwatch,
     skills: [
       { name: "Tailwind CSS", icon: SiTailwindcss },
@@ -98,7 +97,6 @@ const skillCategories = [
     title: "Back-End & Database",
     file: "backend.ts",
     accent: "#f97316",
-    glow: "rgba(249,115,22,0.08)",
     icon: HiCube,
     skills: [
       { name: "Node.js", icon: SiNodedotjs },
@@ -118,7 +116,6 @@ const skillCategories = [
     title: "Engineering",
     file: "engineering.ts",
     accent: "#7c3aed",
-    glow: "rgba(124,58,237,0.08)",
     icon: HiLightningBolt,
     skills: [
       { name: "SSR / SSG / ISR", icon: HiServer },
@@ -136,7 +133,6 @@ const skillCategories = [
     title: "E-Commerce",
     file: "salla.js",
     accent: "#ff4f8b",
-    glow: "rgba(255,79,139,0.08)",
     icon: HiShoppingCart,
     skills: [
       { name: "Salla Platform", icon: SiSalla },
@@ -152,7 +148,6 @@ const skillCategories = [
     title: "Tools & AI",
     file: "toolchain.ts",
     accent: "#facc15",
-    glow: "rgba(250,204,21,0.08)",
     icon: HiSparkles,
     skills: [
       { name: "Git", icon: SiGit },
@@ -186,7 +181,7 @@ export default function Skills() {
           <h2
             className="font-bold text-text-primary"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "-0.025em",
               fontSize: "clamp(2.2rem, 5vw, 4rem)",
             }}
@@ -202,21 +197,14 @@ export default function Skills() {
           {skillCategories.map((cat, i) => {
             const CatIcon = cat.icon;
             return (
-              <AnimatedSection key={cat.title} delay={i * 0.1}>
+              <AnimatedSection
+                key={cat.title}
+                delay={i * 0.08}
+                from={i % 2 === 0 ? "left" : "right"}
+              >
                 <div
-                  className="glass-card h-full overflow-hidden group"
-                  style={{
-                    boxShadow: `0 0 0 0 ${cat.glow}`,
-                    transition: "box-shadow 0.4s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow =
-                      `0 0 40px ${cat.glow}`;
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow =
-                      `0 0 0 0 ${cat.glow}`;
-                  }}
+                  className="glass-card accent-card h-full overflow-hidden"
+                  style={{ "--accent": cat.accent } as CSSProperties}
                 >
                   {/* Card header */}
                   <div
@@ -238,7 +226,7 @@ export default function Skills() {
                       </div>
                       <h3
                         className="font-semibold text-text-primary text-sm"
-                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        style={{ fontFamily: "var(--font-heading)" }}
                       >
                         {cat.title}
                       </h3>
@@ -247,7 +235,7 @@ export default function Skills() {
                       className="text-[10px] uppercase tracking-widest flex-shrink-0"
                       style={{
                         color: cat.accent,
-                        fontFamily: "'JetBrains Mono', monospace",
+                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       {cat.num}
@@ -261,23 +249,7 @@ export default function Skills() {
                       return (
                         <span
                           key={skill.name}
-                          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-text-secondary text-xs sm:text-sm font-medium transition-all duration-300 cursor-default select-none"
-                          style={{
-                            background: "rgba(13,13,26,0.8)",
-                            border: "1px solid #1a1a2e",
-                          }}
-                          onMouseEnter={(e) => {
-                            const el = e.currentTarget as HTMLSpanElement;
-                            el.style.borderColor = `${cat.accent}50`;
-                            el.style.color = "#e8e8f2";
-                            el.style.background = `${cat.accent}0a`;
-                          }}
-                          onMouseLeave={(e) => {
-                            const el = e.currentTarget as HTMLSpanElement;
-                            el.style.borderColor = "#1a1a2e";
-                            el.style.color = "";
-                            el.style.background = "rgba(13,13,26,0.8)";
-                          }}
+                          className="skill-chip inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-text-secondary text-xs sm:text-sm font-medium cursor-default select-none"
                         >
                           <SkillIcon
                             className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0"

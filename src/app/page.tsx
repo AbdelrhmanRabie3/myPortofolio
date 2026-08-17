@@ -4,21 +4,22 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
-import GitHubContributions from "@/components/GitHubContributions";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Skills />
         <Experience />
         <Projects />
-        {/* <GitHubContributions /> */}
         <Contact />
       </main>
       <Footer />

@@ -111,7 +111,7 @@ export default function About() {
           <h2
             className="font-bold text-text-primary"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "-0.025em",
               fontSize: "clamp(2.2rem, 5vw, 4rem)",
             }}
@@ -134,7 +134,7 @@ export default function About() {
                 >
                   <div
                     className="text-text-muted text-[11px] uppercase tracking-widest mb-3"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {card.file}
                   </div>
@@ -161,7 +161,7 @@ export default function About() {
                       className="text-2xl sm:text-3xl font-bold"
                       style={{
                         color: stat.color,
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "var(--font-heading)",
                       }}
                     >
                       {stat.value}
@@ -184,7 +184,7 @@ export default function About() {
               {/* Header */}
               <div
                 className="text-text-muted text-[11px] uppercase tracking-widest mb-5 flex items-center gap-2"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 <span className="text-accent">■</span> CHARACTER_PROFILE.json
               </div>
@@ -212,7 +212,7 @@ export default function About() {
                     style={{
                       background: "#00ff88",
                       color: "#04040a",
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     LVL 2
@@ -223,7 +223,7 @@ export default function About() {
               {/* Profile Stats */}
               <div
                 className="space-y-2.5 text-sm"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 {profileStats.map((item) => (
                   <div

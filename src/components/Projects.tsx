@@ -1,10 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useState, type CSSProperties } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { HiExternalLink, HiArrowRight } from "react-icons/hi";
+import { HiArrowRight } from "react-icons/hi";
 
-const projects = [
+type Project = {
+  file: string;
+  title: string;
+  status: string;
+  accent: string;
+  description: string;
+  tech: string[];
+  link: string;
+  /** Drop a screenshot in /public/projects and set the path here. */
+  image?: string;
+};
+
+const projects: Project[] = [
   {
     file: "FILE_01",
     title: "Sales Hero",
@@ -21,7 +35,8 @@ const projects = [
       "React Hook Form",
       "Zod",
     ],
-    link: "https://sales-hero-fe.vercel.app/ar",
+    link: "https://sales-hero-fe.qusah.workers.dev/ar",
+    image: "/projects/sales-hero.webp",
   },
   {
     file: "FILE_02",
@@ -40,6 +55,7 @@ const projects = [
       "MongoDB",
     ],
     link: "https://thimarln.com",
+    image: "/projects/thimar.webp",
   },
   {
     file: "FILE_03",
@@ -58,6 +74,7 @@ const projects = [
       "MongoDB",
     ],
     link: "https://drcorp.co/ar",
+    image: "/projects/drcorp.webp",
   },
   {
     file: "FILE_04",
@@ -75,6 +92,7 @@ const projects = [
       "MongoDB",
     ],
     link: "https://www.easylink-ksa.com/ar",
+    image: "/projects/easylink.webp",
   },
   {
     file: "FILE_05",
@@ -91,6 +109,7 @@ const projects = [
       "CSS3",
     ],
     link: "https://qusahstore.com/",
+    image: "/projects/qusah-store.webp",
   },
   {
     file: "FILE_06",
@@ -101,8 +120,46 @@ const projects = [
       "Salla storefront for one of Saudi Arabia's leading cleaning-product brands. Custom Twilight theme work across category, product, and checkout journeys, tuned for mobile-first Arabic shoppers.",
     tech: ["Salla Platform", "Twilight Engine", "JavaScript", "CSS3"],
     link: "https://bareq.sa/",
+    image: "/projects/bareq.webp",
   },
 ];
+
+/** First letters of the project name — the placeholder mark until a real
+ *  screenshot exists at `image`. */
+function monogram(title: string) {
+  return title
+    .split(" ")
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+}
+
+/** Renders the screenshot, falling back to the accent monogram when the file
+ *  is missing or fails to load — so an absent or misnamed image degrades to
+ *  the placeholder instead of a broken card. */
+function ThumbMedia({ project }: { project: Project }) {
+  const [failed, setFailed] = useState(false);
+
+  if (!project.image || failed) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="project-monogram">{monogram(project.title)}</span>
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={project.image}
+      alt={`${project.title} screenshot`}
+      fill
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      className="object-cover object-top"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export default function Projects() {
   return (
@@ -119,7 +176,7 @@ export default function Projects() {
           <h2
             className="font-bold text-text-primary"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "-0.025em",
               fontSize: "clamp(2.2rem, 5vw, 4rem)",
             }}
@@ -134,108 +191,80 @@ export default function Projects() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, i) => (
-            <AnimatedSection key={project.title} delay={i * 0.08}>
-              <div
-                className="glass-card h-full flex flex-col overflow-hidden relative group"
-                style={{
-                  transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLDivElement;
-                  el.style.borderColor = `${project.accent}35`;
-                  el.style.boxShadow = `0 0 40px ${project.accent}08`;
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLDivElement;
-                  el.style.borderColor = "#1a1a2e";
-                  el.style.boxShadow = "none";
-                }}
+            <AnimatedSection key={project.title} delay={i * 0.08} from="scale">
+              <article
+                className="glass-card accent-card h-full flex flex-col overflow-hidden"
+                style={{ "--accent": project.accent } as CSSProperties}
               >
-                {/* Top accent strip */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px] opacity-30 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, ${project.accent}, transparent)`,
-                  }}
-                />
+                {/* Thumbnail — screenshot when present, accent placeholder otherwise */}
+                <div className="project-thumb">
+                  <ThumbMedia project={project} />
 
-                {/* Card header */}
-                <div className="flex items-center justify-between px-5 pt-5 pb-3">
-                  <div className="flex items-center gap-2">
+                  {/* Overlay chrome — pointer-events off so the whole card
+                      stays clickable through the stretched link beneath it. */}
+                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 z-[3] pointer-events-none">
                     <span
-                      className="text-[10px] uppercase tracking-widest"
+                      className="text-[10px] uppercase tracking-widest px-2 py-1 rounded"
                       style={{
                         color: project.accent,
-                        fontFamily: "'JetBrains Mono', monospace",
+                        background: "rgba(4,4,10,0.72)",
+                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       {project.file}
                     </span>
-                  </div>
-
-                  {/* Status + Link */}
-                  <Link
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full transition-all duration-200 hover:scale-105"
-                    style={{
-                      background:
-                        project.status === "ACTIVE"
-                          ? "rgba(0,255,136,0.1)"
-                          : "rgba(68,68,90,0.2)",
-                      color:
-                        project.status === "ACTIVE" ? "#00ff88" : "#7a7a9a",
-                      border: `1px solid ${project.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(68,68,90,0.3)"}`,
-                      fontFamily: "'JetBrains Mono', monospace",
-                    }}
-                  >
-                    {project.status === "ACTIVE" ? (
+                    <span
+                      className="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full"
+                      style={{
+                        background: "rgba(4,4,10,0.72)",
+                        color: "#00ff88",
+                        border: "1px solid rgba(0,255,136,0.25)",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
                       <span className="relative flex h-1.5 w-1.5">
                         <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
                       </span>
-                    ) : (
-                      <HiExternalLink className="w-3 h-3" />
-                    )}
-                    {project.status}
-                  </Link>
+                      {project.status}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Title */}
-                <div className="px-5 pb-3">
+                {/* Title — the single link, stretched over the whole card */}
+                <div className="px-5 pt-4 pb-2">
                   <h3
-                    className="text-text-primary font-bold text-lg group-hover:text-accent transition-colors duration-300"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                    className="text-text-primary font-bold text-lg"
+                    style={{ fontFamily: "var(--font-heading)" }}
                   >
-                    {project.title}
+                    <Link
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="stretched-link transition-colors duration-300 hover:text-accent focus-visible:text-accent"
+                    >
+                      {project.title}
+                      <span className="sr-only"> — open live site</span>
+                    </Link>
                   </h3>
                 </div>
 
-                {/* Description */}
                 <p className="text-text-secondary text-sm leading-relaxed px-5 pb-4 flex-1">
                   {project.description}
                 </p>
 
-                {/* Tech tags */}
                 <div className="px-5 pb-4 flex flex-wrap gap-1.5">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="text-[11px] px-2.5 py-1 rounded text-text-secondary"
-                      style={{
-                        border: `1px solid ${project.accent}30`,
-                        background: `${project.accent}08`,
-                        color: "#b0b0c8",
-                        fontFamily: "'JetBrains Mono', monospace",
-                      }}
+                      className="accent-chip text-[11px] px-2.5 py-1"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                {/* Footer link */}
+                {/* Footer affordance — visual only, the card link covers it */}
                 <div
                   className="border-t px-5 py-3 flex items-center justify-between"
                   style={{
@@ -243,27 +272,25 @@ export default function Projects() {
                     background: "rgba(4,4,10,0.4)",
                   }}
                 >
-                  <Link
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs font-semibold hover:gap-2.5 transition-all duration-200 group/link"
+                  <span
+                    aria-hidden="true"
+                    className="flex items-center gap-1.5 text-xs font-semibold"
                     style={{
                       color: project.accent,
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     VIEW MISSION
-                    <HiArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
+                    <HiArrowRight className="w-3.5 h-3.5" />
+                  </span>
                   <span
                     className="text-[10px] text-text-muted"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {project.tech.length} DEPS
                   </span>
                 </div>
-              </div>
+              </article>
             </AnimatedSection>
           ))}
         </div>

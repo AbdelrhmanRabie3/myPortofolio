@@ -24,7 +24,7 @@ export default function SectionHeading({
       <h2
         className="font-bold text-text-primary"
         style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "var(--font-heading)",
           letterSpacing: "-0.025em",
           fontSize: "clamp(2.2rem, 5vw, 4rem)",
         }}

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlineMail, HiDownload } from "react-icons/hi";
 
 const ROLES = [
   "Full-Stack Developer",
@@ -13,36 +13,40 @@ const ROLES = [
   "Salla Theme Developer",
 ];
 
-function useTypewriter(words: string[], speed = 75, pause = 2200) {
-  const [text, setText] = useState("");
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+function useTypewriter(
+  words: string[],
+  { speed = 75, pause = 2200, enabled = true } = {},
+) {
+  const [index, setIndex] = useState(0);
+  const [count, setCount] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = words[wordIndex];
-    let timeout: ReturnType<typeof setTimeout>;
+    if (!enabled) return;
 
-    if (!isDeleting && text === current) {
-      timeout = setTimeout(() => setIsDeleting(true), pause);
-    } else if (isDeleting && text === "") {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
-    } else {
-      timeout = setTimeout(
-        () => {
-          setText(
-            isDeleting
-              ? current.slice(0, text.length - 1)
-              : current.slice(0, text.length + 1),
-          );
-        },
-        isDeleting ? speed / 2 : speed,
-      );
-    }
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex, words, speed, pause]);
+    const current = words[index % words.length];
+    const atEnd = !deleting && count === current.length;
+    const atStart = deleting && count === 0;
+    const delay = atEnd ? pause : atStart ? 400 : deleting ? speed / 2 : speed;
 
-  return text;
+    /* Every state write happens inside the timer rather than synchronously in
+       the effect body — the synchronous version triggered cascading renders. */
+    const timer = setTimeout(() => {
+      if (atEnd) {
+        setDeleting(true);
+      } else if (atStart) {
+        setDeleting(false);
+        setIndex((i) => (i + 1) % words.length);
+      } else {
+        setCount((c) => c + (deleting ? -1 : 1));
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [count, deleting, index, words, speed, pause, enabled]);
+
+  if (!enabled) return words[0];
+  return words[index % words.length].slice(0, count);
 }
 
 const codeLines = [
@@ -56,7 +60,8 @@ const codeLines = [
 const stackItems = ["React", "Next.js", "Node.js", "MongoDB", "Salla"];
 
 export default function Hero() {
-  const role = useTypewriter(ROLES);
+  const reduceMotion = useReducedMotion();
+  const role = useTypewriter(ROLES, { enabled: !reduceMotion });
 
   return (
     <section
@@ -110,7 +115,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-bold leading-none mb-4"
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "var(--font-heading)",
                 letterSpacing: "-0.025em",
                 fontSize: "clamp(2.8rem, 8vw, 5.5rem)",
               }}
@@ -133,13 +138,13 @@ export default function Hero() {
             >
               <span
                 className="text-text-muted text-sm select-none"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 ~/career $
               </span>
               <span
                 className="text-accent text-lg sm:text-xl md:text-2xl font-semibold min-h-[1.5em]"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 {role}
                 <span
@@ -169,12 +174,20 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.46 }}
-              className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-10"
+              className="flex flex-col sm:flex-row flex-wrap items-center gap-4 justify-center lg:justify-start mb-10"
             >
               <Link href="#projects" className="btn-game">
                 VIEW PROJECTS
                 <span className="text-base">▶</span>
               </Link>
+              <a
+                href="/Abdelrahman-Rabie-CV.pdf"
+                download="Abdelrahman-Rabie-CV.pdf"
+                className="btn-game-outline"
+              >
+                <HiDownload className="w-4 h-4" />
+                DOWNLOAD CV
+              </a>
               <Link href="#contact" className="btn-game-outline">
                 ESTABLISH CONTACT
               </Link>
@@ -216,12 +229,8 @@ export default function Hero() {
                         : undefined
                     }
                     aria-label={s.label}
-                    className="group flex items-center gap-2 px-4 py-2 rounded-lg text-text-primary hover:text-accent transition-all duration-300 text-sm"
-                    style={{
-                      border: "1px solid rgba(68,68,90,0.6)",
-                      background: "rgba(22,22,40,0.8)",
-                      fontFamily: "'JetBrains Mono', monospace",
-                    }}
+                    className="pill-link group flex items-center gap-2 px-4 py-2 text-text-primary text-sm"
+                    style={{ fontFamily: "var(--font-mono)" }}
                   >
                     <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                     {s.label}
@@ -230,9 +239,9 @@ export default function Hero() {
               })}
               <span
                 className="text-text-muted text-xs ml-1 hidden sm:block"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
-                // Cairo, Egypt
+                {"// Cairo, Egypt"}
               </span>
             </motion.div>
           </div>
@@ -258,7 +267,7 @@ export default function Hero() {
                 <span className="w-3 h-3 rounded-full bg-[#27c840]" />
                 <span
                   className="ml-4 text-text-muted text-xs"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
                   developer.ts — rabie3
                 </span>
@@ -267,7 +276,7 @@ export default function Hero() {
               {/* Code body */}
               <div
                 className="p-5 text-sm leading-7"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 <div>
                   <span className="text-accent-purple">const</span>{" "}
@@ -366,7 +375,7 @@ export default function Hero() {
                     className="text-xl font-bold"
                     style={{
                       color: s.color,
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     {s.value}
@@ -376,7 +385,7 @@ export default function Hero() {
                     style={{
                       color: s.color,
                       opacity: 0.75,
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     {s.label}
@@ -397,7 +406,7 @@ export default function Hero() {
       >
         <span
           className="text-text-muted text-[10px] uppercase tracking-widest"
-          style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          style={{ fontFamily: "var(--font-mono)" }}
         >
           scroll to explore
         </span>

@@ -17,24 +17,61 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  /* Navbar background — rAF-throttled so we do at most one state write per frame. */
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      const sections = navLinks.map((link) =>
-        document.querySelector(link.href),
-      );
-      const scrollPos = window.scrollY + 140;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i] as HTMLElement | null;
-        if (section && section.offsetTop <= scrollPos) {
-          setActiveSection(navLinks[i].href);
-          break;
-        }
-      }
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50);
+        frame = 0;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
+
+  /* Active section — IntersectionObserver instead of querying the DOM on every
+     scroll tick. The rootMargin band means "whatever crosses the viewport middle". */
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.querySelector(link.href))
+      .filter((el): el is Element => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) setActiveSection(`#${visible[0].target.id}`);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  /* Lock background scroll and wire Escape while the mobile overlay is open. */
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -56,7 +93,7 @@ export default function Navbar() {
           <Link href="#hero" className="group flex items-center">
             <span
               className="text-accent text-xl font-semibold tracking-tight transition-opacity group-hover:opacity-75"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              style={{ fontFamily: "var(--font-mono)" }}
             >
               &gt;_ <span className="text-text-primary">rabie3</span>
               <span
@@ -77,7 +114,7 @@ export default function Navbar() {
                     ? "text-accent"
                     : "text-text-secondary hover:text-text-primary"
                 }`}
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 <span className="text-accent text-[10px] mr-1 opacity-50 group-hover:opacity-100 transition-opacity">
                   {link.num}.
@@ -162,9 +199,9 @@ export default function Navbar() {
             <div className="relative z-10 flex flex-col items-center justify-center h-full gap-2 px-8">
               <div
                 className="text-text-muted text-[10px] uppercase tracking-widest mb-8"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
-                // navigation_menu.exe
+                {"// navigation_menu.exe"}
               </div>
               {navLinks.map((link, i) => (
                 <motion.a
@@ -174,27 +211,12 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.07 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full flex items-center gap-5 px-6 py-4 rounded-xl text-text-secondary hover:text-accent transition-all duration-300 group"
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    border: "1px solid transparent",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                      "rgba(0,255,136,0.2)";
-                    (e.currentTarget as HTMLAnchorElement).style.background =
-                      "rgba(0,255,136,0.04)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                      "transparent";
-                    (e.currentTarget as HTMLAnchorElement).style.background =
-                      "transparent";
-                  }}
+                  className="w-full flex items-center gap-5 px-6 py-4 rounded-xl border border-transparent text-text-secondary transition-all duration-300 group hover:text-accent hover:border-accent/20 hover:bg-accent/5 focus-visible:text-accent focus-visible:border-accent/20 focus-visible:bg-accent/5"
+                  style={{ fontFamily: "var(--font-heading)" }}
                 >
                   <span
                     className="text-accent text-xs opacity-60 group-hover:opacity-100 transition-opacity w-6 text-right flex-shrink-0"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {link.num}.
                   </span>

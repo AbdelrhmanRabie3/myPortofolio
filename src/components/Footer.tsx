@@ -20,14 +20,14 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
           <span
             className="text-accent text-lg font-semibold"
-            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            style={{ fontFamily: "var(--font-mono)" }}
           >
             &gt;_ rabie3
           </span>
           <span className="hidden sm:block w-px h-4 bg-border-subtle" />
           <span
             className="text-text-muted text-xs text-center sm:text-left"
-            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            style={{ fontFamily: "var(--font-mono)" }}
           >
             © {new Date().getFullYear()} — built by Abdelrahman Rabie
           </span>
@@ -36,20 +36,8 @@ export default function Footer() {
         {/* Back to top */}
         <button
           onClick={scrollToTop}
-          className="group flex items-center gap-2 px-4 py-2 rounded-lg text-text-muted hover:text-accent transition-all duration-300 text-xs"
-          style={{
-            border: "1px solid #1a1a2e",
-            background: "rgba(13,13,26,0.5)",
-            fontFamily: "'JetBrains Mono', monospace",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor =
-              "rgba(0,255,136,0.3)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor =
-              "#1a1a2e";
-          }}
+          className="pill-link group flex items-center gap-2 px-4 py-2 text-text-muted text-xs"
+          style={{ fontFamily: "var(--font-mono)" }}
           aria-label="Back to top"
         >
           BACK TO TOP

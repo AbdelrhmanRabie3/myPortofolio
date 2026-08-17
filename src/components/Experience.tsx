@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import AnimatedSection from "./AnimatedSection";
 import { HiBriefcase, HiAcademicCap, HiCheckCircle } from "react-icons/hi";
 
@@ -98,7 +99,7 @@ export default function Experience() {
           <h2
             className="font-bold text-text-primary"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "-0.025em",
               fontSize: "clamp(2.2rem, 5vw, 4rem)",
             }}
@@ -125,30 +126,14 @@ export default function Experience() {
 
           <div className="space-y-8">
             {experiences.map((exp, i) => (
-              <AnimatedSection key={i} delay={i * 0.12}>
-                <div className="flex gap-3 sm:gap-6 md:gap-8 group">
+              <AnimatedSection key={i} delay={i * 0.08} from="left">
+                <div
+                  className="quest-item flex gap-3 sm:gap-6 md:gap-8"
+                  style={{ "--accent": exp.accent } as CSSProperties}
+                >
                   {/* Quest marker */}
                   <div className="relative flex-shrink-0 flex flex-col items-center">
-                    <div
-                      className="w-10 h-10 md:w-13 md:h-13 rounded-xl flex items-center justify-center border transition-all duration-300 z-10"
-                      style={{
-                        background: `${exp.accent}12`,
-                        borderColor: `${exp.accent}35`,
-                        boxShadow: `0 0 0 0 ${exp.accent}20`,
-                        transition:
-                          "box-shadow 0.3s ease, border-color 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLDivElement;
-                        el.style.boxShadow = `0 0 20px ${exp.accent}30`;
-                        el.style.borderColor = `${exp.accent}70`;
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLDivElement;
-                        el.style.boxShadow = `0 0 0 0 ${exp.accent}20`;
-                        el.style.borderColor = `${exp.accent}35`;
-                      }}
-                    >
+                    <div className="quest-marker w-10 h-10 md:w-13 md:h-13 rounded-xl flex items-center justify-center z-10">
                       {exp.type === "work" ? (
                         <HiBriefcase
                           className="w-4 h-4 md:w-5 md:h-5"
@@ -164,7 +149,7 @@ export default function Experience() {
                   </div>
 
                   {/* Quest card */}
-                  <div className="glass-card p-4 sm:p-6 flex-1 min-w-0 group-hover:border-opacity-50 transition-all duration-300">
+                  <div className="glass-card p-4 sm:p-6 flex-1 min-w-0">
                     {/* Card top row */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                       <div>
@@ -174,7 +159,7 @@ export default function Experience() {
                             className="text-[10px] uppercase tracking-widest"
                             style={{
                               color: exp.accent,
-                              fontFamily: "'JetBrains Mono', monospace",
+                              fontFamily: "var(--font-mono)",
                             }}
                           >
                             {exp.quest}
@@ -189,7 +174,7 @@ export default function Experience() {
                               color:
                                 exp.status === "ACTIVE" ? "#00ff88" : "#7a7a9a",
                               border: `1px solid ${exp.status === "ACTIVE" ? "rgba(0,255,136,0.25)" : "rgba(120,120,160,0.25)"}`,
-                              fontFamily: "'JetBrains Mono', monospace",
+                              fontFamily: "var(--font-mono)",
                             }}
                           >
                             {exp.status === "COMPLETED" ? (
@@ -206,7 +191,7 @@ export default function Experience() {
 
                         <h3
                           className="text-text-primary font-semibold text-base"
-                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                          style={{ fontFamily: "var(--font-heading)" }}
                         >
                           {exp.role}
                         </h3>
@@ -223,7 +208,7 @@ export default function Experience() {
                         style={{
                           border: "1px solid #1a1a2e",
                           background: "rgba(4,4,10,0.6)",
-                          fontFamily: "'JetBrains Mono', monospace",
+                          fontFamily: "var(--font-mono)",
                         }}
                       >
                         {exp.period}
@@ -251,13 +236,8 @@ export default function Experience() {
                       {exp.tech.map((t) => (
                         <span
                           key={t}
-                          className="text-[11px] px-2.5 py-1 rounded-md text-text-muted"
-                          style={{
-                            border: `1px solid ${exp.accent}25`,
-                            background: `${exp.accent}08`,
-                            fontFamily: "'JetBrains Mono', monospace",
-                            color: exp.accent,
-                          }}
+                          className="accent-chip text-[11px] px-2.5 py-1"
+                          style={{ color: exp.accent }}
                         >
                           {t}
                         </span>

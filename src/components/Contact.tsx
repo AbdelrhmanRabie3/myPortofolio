@@ -57,7 +57,7 @@ export default function Contact() {
           <h2
             className="font-bold text-text-primary"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "var(--font-heading)",
               letterSpacing: "-0.025em",
               fontSize: "clamp(2.2rem, 5vw, 4rem)",
             }}
@@ -80,14 +80,14 @@ export default function Contact() {
                 <span className="w-3 h-3 rounded-full bg-[#27c840]" />
                 <span
                   className="ml-4 text-text-muted text-xs"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
                   contact.sh — rabie3
                 </span>
               </div>
               <div
                 className="p-5 space-y-4 text-sm overflow-hidden"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 <div className="text-text-muted text-xs">
                   <span className="text-accent">$</span> cat contact_info.json
@@ -159,7 +159,7 @@ export default function Contact() {
               <div>
                 <div
                   className="text-text-muted text-[11px] uppercase tracking-widest mb-3"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
                   <span className="text-accent">■</span> quick_actions.sh
                 </div>
@@ -205,28 +205,8 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-text-secondary hover:text-accent transition-all duration-300 text-sm font-medium group"
-                      style={{
-                        border: "1px solid #1a1a2e",
-                        background: "rgba(13,13,26,0.6)",
-                        fontFamily: "'JetBrains Mono', monospace",
-                      }}
-                      onMouseEnter={(e) => {
-                        (
-                          e.currentTarget as HTMLAnchorElement
-                        ).style.borderColor = "rgba(0,255,136,0.3)";
-                        (
-                          e.currentTarget as HTMLAnchorElement
-                        ).style.background = "rgba(0,255,136,0.05)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (
-                          e.currentTarget as HTMLAnchorElement
-                        ).style.borderColor = "#1a1a2e";
-                        (
-                          e.currentTarget as HTMLAnchorElement
-                        ).style.background = "rgba(13,13,26,0.6)";
-                      }}
+                      className="pill-link flex-1 flex items-center justify-center gap-2 py-3 text-text-secondary text-sm font-medium group"
+                      style={{ fontFamily: "var(--font-mono)" }}
                     >
                       <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                       {social.label}
@@ -238,7 +218,7 @@ export default function Contact() {
               {/* Status line */}
               <div
                 className="flex items-center gap-2 text-text-muted text-xs pt-2 border-t border-border-subtle"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />

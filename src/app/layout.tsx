@@ -1,7 +1,28 @@
 import type { Metadata } from "next";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+/* Self-hosted at build time: no render-blocking request to Google, no FOUT,
+   and `adjustFontFallback` removes the layout shift on swap. */
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+/* Defaults to the live deployment so OpenGraph/Twitter tags resolve to absolute
+   URLs without any env config. Set NEXT_PUBLIC_SITE_URL to override — e.g. when
+   moving to a custom domain. */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://my-portofolio-mu-swart.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -32,14 +53,14 @@ export const metadata: Metadata = {
     title: "Abdelrahman Rabie — Full-Stack Developer",
     description:
       "Full-Stack MERN Developer in Cairo, Egypt. React, Next.js, Node.js, MongoDB, and custom Salla storefront themes.",
-    images: [{ url: "/me.jpeg", width: 1200, height: 630 }],
+    /* images omitted on purpose — app/opengraph-image.tsx supplies the card
+       and its correct dimensions to both OpenGraph and Twitter. */
   },
   twitter: {
     card: "summary_large_image",
     title: "Abdelrahman Rabie — Full-Stack Developer",
     description:
       "Full-Stack MERN Developer in Cairo, Egypt. React, Next.js, Node.js, MongoDB, and custom Salla storefront themes.",
-    images: ["/me.jpeg"],
   },
   robots: { index: true, follow: true },
 };
@@ -50,19 +71,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+    >
       <body className="antialiased">{children}</body>
     </html>
   );
