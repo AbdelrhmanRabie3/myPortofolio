@@ -16,10 +16,15 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <Hero />
+        {/* Work before biography — the proof is one scroll from the hero
+            instead of four sections down. It is close enough that the hero no
+            longer needs a button pointing at it, which is why its CTAs are the
+            CV and the contact form. About/Skills/Experience then answer "who
+            is this" for visitors the work already convinced. */}
+        <Projects />
         <About />
         <Skills />
         <Experience />
-        <Projects />
         <Contact />
       </main>
       <Footer />

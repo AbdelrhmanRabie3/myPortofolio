@@ -130,7 +130,7 @@ export default function Projects() {
         {/* Chapter header */}
         <AnimatedSection className="mb-14">
           <div className="flex items-center gap-4 mb-5">
-            <span className="chapter-badge">CHAPTER_04</span>
+            <span className="chapter-badge">CHAPTER_01</span>
             <div className="h-px flex-1 bg-border-subtle" />
           </div>
           <h2
@@ -164,7 +164,7 @@ export default function Projects() {
                       stays clickable through the stretched link beneath it. */}
                   <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 z-[3] pointer-events-none">
                     <span
-                      className="text-[10px] uppercase tracking-widest px-2 py-1 rounded"
+                      className="text-[11px] uppercase tracking-widest px-2 py-1 rounded"
                       style={{
                         color: project.accent,
                         background: "rgba(4,4,10,0.72)",
@@ -174,7 +174,7 @@ export default function Projects() {
                       {project.file}
                     </span>
                     <span
-                      className="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full"
+                      className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full"
                       style={{
                         background: "rgba(4,4,10,0.72)",
                         color: "#00ff88",
@@ -244,7 +244,7 @@ export default function Projects() {
                     <HiArrowRight className="w-3.5 h-3.5" />
                   </span>
                   <span
-                    className="text-[10px] text-text-muted"
+                    className="text-[11px] text-text-muted"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {project.tech.length} DEPS

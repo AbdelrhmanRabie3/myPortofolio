@@ -102,7 +102,7 @@ export default function About() {
         {/* Chapter header */}
         <AnimatedSection className="mb-14">
           <div className="flex items-center gap-4 mb-5">
-            <span className="chapter-badge">CHAPTER_01</span>
+            <span className="chapter-badge">CHAPTER_02</span>
             <div className="h-px flex-1 bg-border-subtle" />
           </div>
           <h2
@@ -181,7 +181,7 @@ export default function About() {
                       />
                     </div>
                     <div
-                      className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded text-[10px] font-bold"
+                      className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded text-[11px] font-bold"
                       style={{
                         background: "#00ff88",
                         color: "#04040a",
@@ -219,12 +219,12 @@ export default function About() {
 
                   {/* XP Bars */}
                   <div className="space-y-3">
-                    <div className="text-[10px] text-text-muted uppercase tracking-widest mb-1">
+                    <div className="text-[11px] text-text-muted uppercase tracking-widest mb-1">
                       Skill Levels
                     </div>
                     {xpBars.map((bar) => (
                       <div key={bar.skill}>
-                        <div className="flex justify-between text-[11px] mb-1.5">
+                        <div className="flex justify-between text-xs mb-1.5">
                           <span className="text-text-secondary">
                             {bar.skill}
                           </span>
@@ -266,9 +266,10 @@ export default function About() {
                     >
                       {stat.value}
                     </div>
-                    {/* Held at 10px: the column is ~130px per tile here, and
-                        at 12px "LIVE PROJECTS" wraps and unbalances the row. */}
-                    <div className="text-text-muted text-[10px] uppercase tracking-wider mt-1">
+                    {/* 11px, not 12: the column is ~130px per tile, and at
+                        12px "LIVE PROJECTS" wraps and unbalances the row. The
+                        looser `tracking-wide` pays for the extra pixel. */}
+                    <div className="text-text-muted text-[11px] uppercase tracking-wide mt-1">
                       {stat.label}
                     </div>
                   </div>

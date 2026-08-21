@@ -651,6 +651,31 @@ section[id],
     0 0 0 4px var(--color-accent);
 }
 
+/* === SCROLL CUE ===
+   Promoted from a decorative div to a real link: the one element at the
+   bottom of the hero that reads as clickable now actually is. */
+
+.scroll-cue {
+  color: var(--color-text-muted);
+  transition: color 0.25s ease;
+}
+
+.scroll-cue:hover,
+.scroll-cue:focus-visible {
+  color: var(--color-accent);
+}
+
+.scroll-cue-mouse {
+  border: 1px solid var(--color-border-subtle);
+  animation: scroll-bounce 1.6s ease-in-out infinite;
+  transition: border-color 0.25s ease;
+}
+
+.scroll-cue:hover .scroll-cue-mouse,
+.scroll-cue:focus-visible .scroll-cue-mouse {
+  border-color: rgba(0, 255, 136, 0.45);
+}
+
 /* === XP BARS === */
 
 .xp-bar {

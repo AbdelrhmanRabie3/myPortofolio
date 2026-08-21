@@ -35,18 +35,28 @@ const entry = (
 
 /* Server component. The entry animations that used to be framer-motion props
    are now the `.enter*` CSS classes, so this entire subtree renders as visible
-   HTML on the first paint — only <TypewriterRole /> ships any JS. */
+   HTML on the first paint — only <TypewriterRole /> ships any JS.
+
+   Choreography budget: the whole hero settles by ~1.6s. The old schedule ran
+   past 2.5s, which left the terminal still assembling itself long after the
+   visitor had finished reading the bio. */
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      aria-labelledby="hero-heading"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
       {/* Animated grid background */}
-      <div className="absolute inset-0 grid-bg" style={{ opacity: 0.55 }} />
+      <div
+        aria-hidden
+        className="absolute inset-0 grid-bg"
+        style={{ opacity: 0.55 }}
+      />
 
       {/* Center radial glow */}
       <div
+        aria-hidden
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full pointer-events-none"
         style={{
           background:
@@ -55,6 +65,7 @@ export default function Hero() {
       />
       {/* Secondary purple glow */}
       <div
+        aria-hidden
         className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
           background:
@@ -66,25 +77,12 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-20">
           {/* ── LEFT — Main Content ── */}
           <div className="flex-1 text-center lg:text-left">
-            {/* Status badge */}
-            <div
-              className="enter enter-up inline-flex items-center gap-2 mb-7"
-              style={entry(0)}
-            >
-              <span className="chapter-badge flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-                </span>
-                SYSTEM ONLINE — AVAILABLE FOR HIRE
-              </span>
-            </div>
-
             {/* Name — the LCP element, so it paints on frame one */}
             <h1
+              id="hero-heading"
               className="enter enter-up font-bold leading-none mb-4"
               style={{
-                ...entry(0.1, 0.7, { y: 30 }),
+                ...entry(0.08, 0.6, { y: 26 }),
                 fontFamily: "var(--font-heading)",
                 letterSpacing: "-0.025em",
                 fontSize: "clamp(2.8rem, 8vw, 5.5rem)",
@@ -102,7 +100,7 @@ export default function Hero() {
             {/* Typewriter role */}
             <div
               className="enter enter-up flex items-center gap-3 justify-center lg:justify-start mb-7"
-              style={entry(0.22, 0.7)}
+              style={entry(0.18, 0.6)}
             >
               <span
                 className="text-text-muted text-sm select-none"
@@ -116,7 +114,7 @@ export default function Hero() {
             {/* Bio */}
             <p
               className="enter enter-up text-text-secondary text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-9 leading-relaxed"
-              style={entry(0.34, 0.7)}
+              style={{ ...entry(0.26, 0.6), textWrap: "pretty" }}
             >
               Building enterprise ERP and e-commerce products with the{" "}
               <span className="text-text-primary font-medium">MERN stack</span>{" "}
@@ -126,25 +124,26 @@ export default function Hero() {
               performance, and bilingual Arabic/English UX.
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA row — two actions, both things a scroll cannot do.
+                "VIEW PROJECTS" lived here until Projects became the section
+                directly below: it then pointed at the same place as the scroll
+                cue 150px under it, and asked for a click to do what the wheel
+                already does. The work sells itself one screen down; the hero
+                asks for the CV and the conversation instead. */}
             <div
-              className="enter enter-up flex flex-col sm:flex-row flex-wrap items-center gap-4 justify-center lg:justify-start mb-10"
-              style={entry(0.46, 0.7)}
+              className="enter enter-up flex flex-col sm:flex-row flex-wrap items-center gap-4 sm:gap-5 justify-center lg:justify-start mb-10"
+              style={entry(0.34, 0.6)}
             >
               {/* Plain anchors, not next/link: every link on this page is an
                   in-page hash, a mailto, or an external URL, so client-side
                   routing buys nothing — and next/link was prefetching a 35KB
                   RSC payload for the route we are already on. */}
-              <a href="#projects" className="btn-game">
-                VIEW PROJECTS
-                <span className="text-base">▶</span>
-              </a>
               <a
                 href="/Abdelrahman-Rabie-CV.pdf"
                 download="Abdelrahman-Rabie-CV.pdf"
-                className="btn-game-outline"
+                className="btn-game"
               >
-                <HiDownload className="w-4 h-4" />
+                <HiDownload aria-hidden className="w-4 h-4" />
                 DOWNLOAD CV
               </a>
               <a href="#contact" className="btn-game-outline">
@@ -155,7 +154,7 @@ export default function Hero() {
             {/* Social links */}
             <div
               className="enter enter-fade flex items-center gap-3 justify-center lg:justify-start flex-wrap"
-              style={entry(0.6)}
+              style={entry(0.42)}
             >
               {[
                 {
@@ -189,26 +188,28 @@ export default function Hero() {
                     className="pill-link group flex items-center gap-2 px-4 py-2 text-text-primary text-sm"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <Icon
+                      aria-hidden
+                      className="w-4 h-4 group-hover:scale-110 transition-transform"
+                    />
                     {s.label}
                   </a>
                 );
               })}
-              <span
-                className="text-text-muted text-xs ml-1 hidden sm:block"
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                {"// Cairo, Egypt"}
-              </span>
             </div>
           </div>
 
           {/* ── RIGHT — Terminal Display ──
               Entry and float live on separate elements: one `animation-name`
-              per element, and the perpetual float must not restart the entry. */}
+              per element, and the perpetual float must not restart the entry.
+
+              The three mini stat tiles that used to sit under this terminal
+              were the same 2+ / 6 / 20+ figures the About section renders one
+              screen below — the same fact twice, under two different labels.
+              About owns them now. */}
           <div
             className="enter enter-right flex-shrink-0 w-full max-w-[360px] lg:max-w-[400px]"
-            style={entry(0.45, 0.9, { x: 50 })}
+            style={entry(0.3, 0.8, { x: 40 })}
           >
             <div className="float-y">
               <div
@@ -220,9 +221,18 @@ export default function Hero() {
               >
                 {/* Terminal title bar */}
                 <div className="terminal-header">
-                  <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                  <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                  <span className="w-3 h-3 rounded-full bg-[#27c840]" />
+                  <span
+                    aria-hidden
+                    className="w-3 h-3 rounded-full bg-[#ff5f56]"
+                  />
+                  <span
+                    aria-hidden
+                    className="w-3 h-3 rounded-full bg-[#febc2e]"
+                  />
+                  <span
+                    aria-hidden
+                    className="w-3 h-3 rounded-full bg-[#27c840]"
+                  />
                   <span
                     className="ml-4 text-text-muted text-xs"
                     style={{ fontFamily: "var(--font-mono)" }}
@@ -246,7 +256,7 @@ export default function Hero() {
                     <div
                       key={i}
                       className="enter enter-left"
-                      style={entry(0.9 + i * 0.13, 0.5, { x: 12 })}
+                      style={entry(0.55 + i * 0.08, 0.4, { x: 12 })}
                     >
                       <span className="text-text-muted">{line.key}</span>
                       <span className="text-text-secondary">: </span>
@@ -257,7 +267,7 @@ export default function Hero() {
 
                   <div
                     className="enter enter-left"
-                    style={entry(1.6, 0.5, { x: 12 })}
+                    style={entry(0.95, 0.4, { x: 12 })}
                   >
                     <span className="text-text-muted"> stack</span>
                     <span className="text-text-secondary">: [</span>
@@ -267,7 +277,7 @@ export default function Hero() {
                     <div
                       key={tech}
                       className="enter enter-left pl-8"
-                      style={entry(1.72 + i * 0.1, 0.5, { x: 12 })}
+                      style={entry(1.02 + i * 0.06, 0.4, { x: 12 })}
                     >
                       <span className="text-accent-orange">
                         &quot;{tech}&quot;
@@ -276,93 +286,59 @@ export default function Hero() {
                     </div>
                   ))}
 
-                  <div className="enter enter-fade" style={entry(2.18)}>
+                  <div className="enter enter-fade" style={entry(1.32)}>
                     <span className="text-text-secondary"> ]</span>
                   </div>
 
-                  <div className="enter enter-fade" style={entry(2.3)}>
+                  <div className="enter enter-fade" style={entry(1.4)}>
                     <span className="text-text-secondary">{"}"}</span>
                   </div>
 
                   <div
                     className="enter enter-fade pt-3 flex items-center gap-2"
-                    style={entry(2.5)}
+                    style={entry(1.48)}
                   >
-                    <span className="text-accent">▶</span>
+                    <span aria-hidden className="text-accent">
+                      ▶
+                    </span>
                     <span className="text-text-muted">
                       Running in production
                     </span>
                     <span
+                      aria-hidden
                       className="inline-block w-2 h-[1.1em] bg-accent align-middle"
                       style={{ animation: "cursor-blink 1s infinite" }}
                     />
                   </div>
                 </div>
               </div>
-
-              {/* Mini stat pills below terminal */}
-              <div
-                className="enter enter-up grid grid-cols-3 gap-3 mt-4"
-                style={entry(1.6, 0.6, { y: 16 })}
-              >
-                {[
-                  { label: "EXP", value: "2+ YRS", color: "#00ff88" },
-                  { label: "PROJECTS", value: "6", color: "#00d4ff" },
-                  { label: "TECH", value: "20+", color: "#7c3aed" },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className="glass-card p-3 text-center"
-                    style={{ borderColor: `${s.color}22` }}
-                  >
-                    <div
-                      className="text-xl font-bold"
-                      style={{
-                        color: s.color,
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      {s.value}
-                    </div>
-                    <div
-                      className="text-[10px] uppercase tracking-wider mt-0.5"
-                      style={{
-                        color: s.color,
-                        opacity: 0.75,
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        className="enter enter-fade absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={entry(2.2)}
+      {/* Scroll indicator — a real link now, not decoration. It looked
+          clickable, sat in the exact spot a visitor aims at, and did nothing.
+          Hidden below `sm`, where a thumb reaches it before the content. */}
+      <a
+        href="#projects"
+        aria-label="Scroll to the projects"
+        className="scroll-cue enter enter-fade absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
+        style={entry(1.55)}
       >
         <span
-          className="text-text-muted text-[10px] uppercase tracking-widest"
+          className="text-[11px] uppercase tracking-widest"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           scroll to explore
         </span>
-        <div
-          className="w-5 h-8 rounded-full flex items-start justify-center p-1"
-          style={{
-            border: "1px solid #1a1a2e",
-            animation: "scroll-bounce 1.6s ease-in-out infinite",
-          }}
+        <span
+          aria-hidden
+          className="scroll-cue-mouse w-5 h-8 rounded-full flex items-start justify-center p-1"
         >
-          <div className="w-1 h-2 rounded-full bg-accent" />
-        </div>
-      </div>
+          <span className="w-1 h-2 rounded-full bg-accent" />
+        </span>
+      </a>
     </section>
   );
 }

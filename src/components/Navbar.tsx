@@ -2,11 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+/* Order and numbering mirror the section order in app/page.tsx. The
+   IntersectionObserver below walks this list to set the active link, so a
+   mismatch here shows up as the underline jumping to the wrong item. */
 const navLinks = [
-  { label: "About", href: "#about", num: "01" },
-  { label: "Skills", href: "#skills", num: "02" },
-  { label: "Experience", href: "#experience", num: "03" },
-  { label: "Projects", href: "#projects", num: "04" },
+  { label: "Projects", href: "#projects", num: "01" },
+  { label: "About", href: "#about", num: "02" },
+  { label: "Skills", href: "#skills", num: "03" },
+  { label: "Experience", href: "#experience", num: "04" },
   { label: "Contact", href: "#contact", num: "05" },
 ];
 
@@ -57,10 +60,24 @@ export default function Navbar() {
       .filter((el): el is Element => el !== null);
     if (sections.length === 0) return;
 
+    /* The running set of sections crossing the band. An observer callback only
+       reports what *changed*, so the set has to live out here: reading each
+       batch in isolation meant a link was only ever switched on, never off.
+       The hero is in no section, so scrolling back to the top left whichever
+       link was last visited still lit. */
+    const inBand = new Set<string>();
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) setActiveSection(`#${visible[0].target.id}`);
+        for (const entry of entries) {
+          if (entry.isIntersecting) inBand.add(entry.target.id);
+          else inBand.delete(entry.target.id);
+        }
+        /* Resolve through navLinks, which is in document order — entry order
+           within a batch is not, so two sections in the band at once could
+           otherwise light the lower one. */
+        const active = navLinks.find((link) => inBand.has(link.href.slice(1)));
+        setActiveSection(active ? active.href : "");
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
     );
@@ -162,7 +179,7 @@ export default function Navbar() {
                 }`}
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                <span className="text-accent text-[10px] mr-1 opacity-50 group-hover:opacity-100 transition-opacity">
+                <span className="text-accent text-[11px] mr-1 opacity-70 group-hover:opacity-100 transition-opacity">
                   {link.num}.
                 </span>
                 {link.label}
@@ -235,7 +252,7 @@ export default function Navbar() {
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full gap-2 px-8">
             <div
-              className="text-text-muted text-[10px] uppercase tracking-widest mb-8"
+              className="text-text-muted text-[11px] uppercase tracking-widest mb-8"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               {"// navigation_menu.exe"}

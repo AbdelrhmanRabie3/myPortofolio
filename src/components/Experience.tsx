@@ -91,7 +91,7 @@ export default function Experience() {
         {/* Chapter header */}
         <AnimatedSection className="mb-14">
           <div className="flex items-center gap-4 mb-5">
-            <span className="chapter-badge">CHAPTER_03</span>
+            <span className="chapter-badge">CHAPTER_04</span>
             <div className="h-px flex-1 bg-border-subtle" />
           </div>
           <h2
@@ -154,7 +154,7 @@ export default function Experience() {
                         {/* Quest badge + status */}
                         <div className="flex items-center gap-2 mb-2">
                           <span
-                            className="text-[10px] uppercase tracking-widest"
+                            className="text-[11px] uppercase tracking-widest"
                             style={{
                               color: exp.accent,
                               fontFamily: "var(--font-mono)",
@@ -163,7 +163,7 @@ export default function Experience() {
                             {exp.quest}
                           </span>
                           <span
-                            className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded"
+                            className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded"
                             style={{
                               background:
                                 exp.status === "ACTIVE"
@@ -202,7 +202,7 @@ export default function Experience() {
                       </div>
 
                       <span
-                        className="text-text-muted text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg whitespace-nowrap self-start flex-shrink-0"
+                        className="text-text-muted text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg whitespace-nowrap self-start flex-shrink-0"
                         style={{
                           border: "1px solid #1a1a2e",
                           background: "rgba(4,4,10,0.6)",

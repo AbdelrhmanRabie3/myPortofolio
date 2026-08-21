@@ -173,7 +173,7 @@ export default function Skills() {
         {/* Chapter header */}
         <AnimatedSection className="mb-14">
           <div className="flex items-center gap-4 mb-5">
-            <span className="chapter-badge">CHAPTER_02</span>
+            <span className="chapter-badge">CHAPTER_03</span>
             <div className="h-px flex-1 bg-border-subtle" />
           </div>
           <h2
@@ -230,7 +230,7 @@ export default function Skills() {
                       </h3>
                     </div>
                     <span
-                      className="text-[10px] uppercase tracking-widest flex-shrink-0"
+                      className="text-[11px] uppercase tracking-widest flex-shrink-0"
                       style={{
                         color: cat.accent,
                         fontFamily: "var(--font-mono)",
