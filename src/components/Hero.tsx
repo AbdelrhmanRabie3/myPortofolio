@@ -121,7 +121,7 @@ export default function Hero() {
               and Next.js — plus custom{" "}
               <span className="text-accent font-medium">Salla storefronts</span>{" "}
               for Saudi retail brands. Obsessed with clean architecture,
-              performance, and bilingual Arabic/English UX.
+              performance, and multilingual.
             </p>
 
             {/* CTA row — two actions, both things a scroll cannot do.

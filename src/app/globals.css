@@ -438,44 +438,268 @@ section[id],
   border-radius: inherit;
 }
 
-/* === PROJECT THUMBNAIL ===
-   Procedural placeholder until a real screenshot is dropped in. */
+/* === PROJECT SHOWCASE =====================================================
+   Each project is presented as a device mock-up rather than a cropped thumb:
+   the desktop capture sits inside a browser chrome at its own intrinsic
+   aspect ratio (so nothing is cut off), and the phone capture overlaps the
+   frame's outer corner as proof the build is responsive.
 
-.project-thumb {
+   `--accent` is set inline per project and drives every tinted edge below. */
+
+.mission-row {
   position: relative;
-  /* Matched to the ~2.18:1 browser-viewport screenshots so object-cover trims
-     only the outer edges instead of ~27% of the width. */
-  aspect-ratio: 2 / 1;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      circle at 28% 22%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
-      transparent 62%
-    ),
-    linear-gradient(135deg, #0d0d1a 0%, #060610 100%);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
-.project-thumb::after {
+.mission-stage {
+  position: relative;
+}
+
+/* The device cluster hangs past the browser frame's bottom edge; this reserves
+   the overhang so consecutive rows never collide. Only applied when there is
+   something to draw — otherwise the row would end on dead space. */
+.mission-stage.has-devices {
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+/* --- Browser chrome --- */
+
+.browser-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0b16;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.mission-row:hover .browser-frame,
+.mission-row:focus-within .browser-frame {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.6),
+    0 0 45px color-mix(in srgb, var(--accent) 16%, transparent);
+  transform: translateY(-4px);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: #12121f;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.browser-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2d2d50;
+}
+
+/* Only the "live" light picks up the project accent — three neon dots would
+   fight the screenshot for attention. */
+.browser-dots span:last-child {
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.browser-url {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+  background: #0b0b16;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 5px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browser-screen {
+  position: relative;
+  overflow: hidden;
+  background: #060610;
+}
+
+.browser-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mission-row:hover .browser-screen img,
+.mission-row:focus-within .browser-screen img {
+  transform: scale(1.03);
+}
+
+/* --- Device cluster (tablet + phone) ---
+   Overlaps the browser frame's outer bottom corner: the same page at three
+   widths, which is the whole claim "responsive" is making. Both captures are
+   top-anchored `cover`, so a source that is proportionally taller than its
+   frame loses its bottom rather than its sides. */
+
+/* Sized from the stage's HEIGHT, never the row's width. Sizing by width made
+   the cluster identical on every row, so Sales Hero — whose dashboard capture
+   is 2.19:1 against 1.6:1 everywhere else — got the same devices over a frame
+   two-thirds the height, and they swallowed it (56% covered vs 43%). Driving
+   the height and letting `aspect-ratio` derive each width keeps every row at
+   the same proportion. Width stays `auto`: an absolutely positioned flex box
+   shrink-wraps its children. */
+.device-cluster {
+  position: absolute;
+  bottom: 0;
+  left: clamp(10px, 2%, 20px);
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  height: clamp(140px, 46%, 300px);
+}
+
+@media (min-width: 1024px) {
+  /* Mirrored rows only: put the cluster on the row's outer edge so it leans
+     away from the copy instead of crowding it. */
+  .device-cluster.is-right {
+    left: auto;
+    right: clamp(10px, 2%, 20px);
+    flex-direction: row-reverse;
+  }
+}
+
+.tablet-frame,
+.phone-frame {
+  position: relative;
+  padding: 4px;
+  background: linear-gradient(160deg, #23233a 0%, #0d0d1a 55%);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.62);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* `flex: none` + a height + an aspect-ratio: each frame's width falls out of
+   its capture's real proportions, so the mock-ups can never letterbox. */
+.tablet-frame {
+  flex: none;
+  height: 80%;
+  aspect-ratio: 820 / 1280;
+  border-radius: clamp(9px, 1.4vw, 14px);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.phone-frame {
+  flex: none;
+  height: 100%;
+  /* Sits in front of the tablet and overlaps it. A fixed overlap, not a
+     percentage: percentage margins on a flex item resolve against a container
+     whose width is itself shrink-to-fit here, which is circular. */
+  z-index: 2;
+  margin-left: -14px;
+  aspect-ratio: 390 / 844;
+  border-radius: clamp(13px, 2vw, 20px);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .device-cluster.is-right .phone-frame {
+    margin-left: 0;
+    margin-right: -14px;
+  }
+}
+
+/* Speaker slit — the cue that reads "phone" without a full notch cutout
+   covering the top of the captured page. */
+.phone-frame::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px);
-  background-size: 26px 26px;
-  pointer-events: none;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26%;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(232, 232, 242, 0.28);
+  z-index: 3;
 }
 
-.project-thumb img {
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Slightly different lift per device reads as depth rather than one flat
+   sticker peeling off the frame. */
+.mission-row:hover .tablet-frame,
+.mission-row:focus-within .tablet-frame {
+  transform: translateY(-5px);
 }
 
-.accent-card:hover .project-thumb img,
-.accent-card:focus-within .project-thumb img {
-  transform: scale(1.05);
+.mission-row:hover .phone-frame,
+.mission-row:focus-within .phone-frame {
+  transform: translateY(-10px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.7),
+    0 0 28px color-mix(in srgb, var(--accent) 18%, transparent);
 }
+
+.tablet-screen,
+.phone-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: #060610;
+}
+
+.tablet-screen {
+  border-radius: calc(clamp(9px, 1.4vw, 14px) - 4px);
+}
+
+.phone-screen {
+  border-radius: calc(clamp(13px, 2vw, 20px) - 4px);
+}
+
+.tablet-screen img,
+.phone-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Below `sm` the browser frame is too narrow to seat three devices — drop the
+   tablet and let the phone carry the responsive story on its own. */
+@media (max-width: 639px) {
+  .tablet-frame {
+    display: none;
+  }
+
+  /* Alone in a much shorter frame, the phone needs to be a bigger share of it
+     to stay legible. Hanging it further below the frame buys that size back
+     out of the overhang instead of out of the screenshot. */
+  .mission-stage.has-devices {
+    padding-bottom: 4.5rem;
+  }
+
+  .device-cluster {
+    height: clamp(175px, 66%, 220px);
+  }
+
+  .phone-frame {
+    margin-left: 0;
+  }
+}
+
+/* --- Fallback when a capture is missing or fails to load --- */
 
 .project-monogram {
   font-family: var(--font-heading);
@@ -485,6 +709,34 @@ section[id],
   line-height: 1;
   color: color-mix(in srgb, var(--accent) 55%, transparent);
   text-shadow: 0 0 36px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.project-fallback {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(
+      circle at 28% 22%,
+      color-mix(in srgb, var(--accent) 26%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(135deg, #0d0d1a 0%, #060610 100%);
+}
+
+/* --- Brief (the copy beside the mock-up) --- */
+
+.file-tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-radius: 4px;
+  padding: 4px 10px;
+  white-space: nowrap;
 }
 
 /* === CHIPS === */
@@ -805,8 +1057,15 @@ section[id],
     transform: none;
   }
 
-  .accent-card:hover .project-thumb img,
-  .accent-card:focus-within .project-thumb img {
+  /* The showcase lifts four separate layers on hover — kill all of them. */
+  .mission-row:hover .browser-frame,
+  .mission-row:focus-within .browser-frame,
+  .mission-row:hover .browser-screen img,
+  .mission-row:focus-within .browser-screen img,
+  .mission-row:hover .tablet-frame,
+  .mission-row:focus-within .tablet-frame,
+  .mission-row:hover .phone-frame,
+  .mission-row:focus-within .phone-frame {
     transform: none;
   }
 }

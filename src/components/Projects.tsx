@@ -1,18 +1,49 @@
 import type { CSSProperties } from "react";
+import type { StaticImageData } from "next/image";
 import AnimatedSection from "./AnimatedSection";
-import ProjectThumb from "./ProjectThumb";
-import { HiArrowRight } from "react-icons/hi";
+import ProjectScreens from "./ProjectScreens";
+import { HiArrowUpRight } from "react-icons/hi2";
+
+/* Captures are imported rather than referenced by path so Next reads their
+   intrinsic dimensions at build time — the browser frame then reserves exact
+   space (no layout shift) and each screenshot is shown uncropped. */
+import salesHeroShot from "../../public/projects/sales-hero.webp";
+import salesHeroTablet from "../../public/projects/sales-hero-tablet.webp";
+import salesHeroPhone from "../../public/projects/sales-hero-mobile.webp";
+import thimarShot from "../../public/projects/thimar.webp";
+import thimarTablet from "../../public/projects/thimar-tablet.webp";
+import thimarPhone from "../../public/projects/thimar-mobile.webp";
+import drcorpShot from "../../public/projects/drcorp.webp";
+import drcorpTablet from "../../public/projects/drcorp-tablet.webp";
+import drcorpPhone from "../../public/projects/drcorp-mobile.webp";
+import easylinkShot from "../../public/projects/easylink.webp";
+import easylinkTablet from "../../public/projects/easylink-tablet.webp";
+import easylinkPhone from "../../public/projects/easylink-mobile.webp";
+import qusahShot from "../../public/projects/qusah-store.webp";
+import qusahTablet from "../../public/projects/qusah-store-tablet.webp";
+import qusahPhone from "../../public/projects/qusah-store-mobile.webp";
+import bareqShot from "../../public/projects/bareq.webp";
+import bareqTablet from "../../public/projects/bareq-tablet.webp";
+import bareqPhone from "../../public/projects/bareq-mobile.webp";
 
 type Project = {
   file: string;
   title: string;
   status: string;
+  /** The project's own brand colour, lifted to a tonal variant that clears
+   *  WCAG AA (>=4.5:1) on the near-black page. Drives every tinted edge,
+   *  chip and glow on the row, so each card reads in its product's palette. */
   accent: string;
   description: string;
   tech: string[];
   link: string;
-  /** Drop a screenshot in /public/projects and set the path here. */
-  image?: string;
+  /** What the mock browser's address bar reads. */
+  domain: string;
+  shot: StaticImageData;
+  /** Same page at the two narrower breakpoints. Optional: a project with no
+   *  capture at a given size simply doesn't draw that device. */
+  tablet?: StaticImageData;
+  phone?: StaticImageData;
 };
 
 const projects: Project[] = [
@@ -20,7 +51,7 @@ const projects: Project[] = [
     file: "FILE_01",
     title: "Sales Hero",
     status: "ACTIVE",
-    accent: "#00ff88",
+    accent: "#3386e6", // SalesHero blue
     description:
       "Sales management platform with real-time analytics dashboards and automated workflows. Chart-driven reporting, server-state caching with TanStack Query, and validated multi-step forms.",
     tech: [
@@ -33,13 +64,16 @@ const projects: Project[] = [
       "Zod",
     ],
     link: "https://sales-hero-fe.qusah.workers.dev/ar",
-    image: "/projects/sales-hero.webp",
+    domain: "sales-hero-fe.qusah.workers.dev",
+    shot: salesHeroShot,
+    tablet: salesHeroTablet,
+    phone: salesHeroPhone,
   },
   {
     file: "FILE_02",
     title: "Thimar",
     status: "ACTIVE",
-    accent: "#f97316",
+    accent: "#2b9491", // Thimar teal
     description:
       "Full-stack bilingual (Arabic & English) company platform with complete RTL support — layout mirroring, locale-aware routing, and font switching — on top of a custom Express REST API.",
     tech: [
@@ -52,13 +86,16 @@ const projects: Project[] = [
       "MongoDB",
     ],
     link: "https://thimarln.com",
-    image: "/projects/thimar.webp",
+    domain: "thimarln.com",
+    shot: thimarShot,
+    tablet: thimarTablet,
+    phone: thimarPhone,
   },
   {
     file: "FILE_03",
     title: "DrCorp",
     status: "ACTIVE",
-    accent: "#00d4ff",
+    accent: "#d449d2", // DrCorp magenta
     description:
       "Bilingual corporate platform delivering a polished, accessible experience in Arabic and English. Server-rendered for SEO, with a single Zod schema shared across client and server.",
     tech: [
@@ -71,13 +108,16 @@ const projects: Project[] = [
       "MongoDB",
     ],
     link: "https://drcorp.co/ar",
-    image: "/projects/drcorp.webp",
+    domain: "drcorp.co/ar",
+    shot: drcorpShot,
+    tablet: drcorpTablet,
+    phone: drcorpPhone,
   },
   {
     file: "FILE_04",
     title: "EasyLink",
     status: "ACTIVE",
-    accent: "#ff4f8b",
+    accent: "#239761", // EasyLink mint green
     description:
       "Full-stack corporate platform backed by a custom content API, with server-rendered pages, dynamic routing, and a sharp focus on performance, accessibility, and SEO.",
     tech: [
@@ -89,13 +129,16 @@ const projects: Project[] = [
       "MongoDB",
     ],
     link: "https://www.easylink-ksa.com/ar",
-    image: "/projects/easylink.webp",
+    domain: "easylink-ksa.com/ar",
+    shot: easylinkShot,
+    tablet: easylinkTablet,
+    phone: easylinkPhone,
   },
   {
     file: "FILE_05",
     title: "Qusah Store",
     status: "ACTIVE",
-    accent: "#7c3aed",
+    accent: "#677ee4", // Qusah indigo
     description:
       "Custom Salla e-commerce theme built from scratch on the Twilight engine — full Arabic/RTL storefront covering product, cart, and checkout flows for a Saudi household-goods retailer.",
     tech: [
@@ -106,18 +149,24 @@ const projects: Project[] = [
       "CSS3",
     ],
     link: "https://qusahstore.com/",
-    image: "/projects/qusah-store.webp",
+    domain: "qusahstore.com",
+    shot: qusahShot,
+    tablet: qusahTablet,
+    phone: qusahPhone,
   },
   {
     file: "FILE_06",
     title: "Bareq",
     status: "ACTIVE",
-    accent: "#facc15",
+    accent: "#e35459", // Bareq red
     description:
       "Salla storefront for one of Saudi Arabia's leading cleaning-product brands. Custom Twilight theme work across category, product, and checkout journeys, tuned for mobile-first Arabic shoppers.",
     tech: ["Salla Platform", "Twilight Engine", "JavaScript", "CSS3"],
     link: "https://bareq.sa/",
-    image: "/projects/bareq.webp",
+    domain: "bareq.sa",
+    shot: bareqShot,
+    tablet: bareqTablet,
+    phone: bareqPhone,
   },
 ];
 
@@ -128,7 +177,7 @@ export default function Projects() {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Chapter header */}
-        <AnimatedSection className="mb-14">
+        <AnimatedSection className="mb-16 md:mb-20">
           <div className="flex items-center gap-4 mb-5">
             <span className="chapter-badge">CHAPTER_01</span>
             <div className="h-px flex-1 bg-border-subtle" />
@@ -149,110 +198,128 @@ export default function Projects() {
           </p>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project, i) => (
-            <AnimatedSection key={project.title} delay={i * 0.08} from="scale">
-              <article
-                className="glass-card accent-card h-full flex flex-col overflow-hidden"
-                style={{ "--accent": project.accent } as CSSProperties}
+        <div className="space-y-20 md:space-y-24 lg:space-y-28">
+          {projects.map((project, i) => {
+            /* Odd rows mirror: mock-up on the right, brief on the left. The
+               phone follows to the outer edge so it never crowds the copy. */
+            const mirrored = i % 2 === 1;
+
+            return (
+              <AnimatedSection
+                key={project.title}
+                from={mirrored ? "right" : "left"}
               >
-                {/* Thumbnail — screenshot when present, accent placeholder otherwise */}
-                <div className="project-thumb">
-                  <ProjectThumb title={project.title} image={project.image} />
-
-                  {/* Overlay chrome — pointer-events off so the whole card
-                      stays clickable through the stretched link beneath it. */}
-                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 z-[3] pointer-events-none">
-                    <span
-                      className="text-[11px] uppercase tracking-widest px-2 py-1 rounded"
-                      style={{
-                        color: project.accent,
-                        background: "rgba(4,4,10,0.72)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      {project.file}
-                    </span>
-                    <span
-                      className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full"
-                      style={{
-                        background: "rgba(4,4,10,0.72)",
-                        color: "#00ff88",
-                        border: "1px solid rgba(0,255,136,0.25)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
-                      </span>
-                      {project.status}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Title — the single link, stretched over the whole card */}
-                <div className="px-5 pt-4 pb-2">
-                  <h3
-                    className="text-text-primary font-bold text-lg"
-                    style={{ fontFamily: "var(--font-heading)" }}
+                <article
+                  className="mission-row grid lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+                  style={{ "--accent": project.accent } as CSSProperties}
+                >
+                  {/* Device mock-up. The link here is a mouse convenience —
+                      hidden from the a11y tree so the CTA below stays the one
+                      announced link to this project. */}
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className={`block lg:col-span-7 ${
+                      mirrored ? "lg:order-2" : ""
+                    }`}
                   >
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="stretched-link transition-colors duration-300 hover:text-accent focus-visible:text-accent"
+                    <ProjectScreens
+                      title={project.title}
+                      url={project.domain}
+                      desktop={project.shot}
+                      tablet={project.tablet}
+                      mobile={project.phone}
+                      side={mirrored ? "right" : "left"}
+                    />
+                  </a>
+
+                  {/* Brief */}
+                  <div
+                    className={`lg:col-span-5 ${mirrored ? "lg:order-1" : ""}`}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="file-tag">{project.file}</span>
+                      <span className="h-px flex-1 bg-border-subtle" />
+                      <span
+                        className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full"
+                        style={{
+                          background: "rgba(4,4,10,0.72)",
+                          color: "#00ff88",
+                          border: "1px solid rgba(0,255,136,0.25)",
+                          fontFamily: "var(--font-mono)",
+                        }}
+                      >
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="live-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
+                        </span>
+                        {project.status}
+                      </span>
+                    </div>
+
+                    <h3
+                      className="text-text-primary font-bold mb-3"
+                      style={{
+                        fontFamily: "var(--font-heading)",
+                        letterSpacing: "-0.02em",
+                        fontSize: "clamp(1.6rem, 3.2vw, 2.1rem)",
+                      }}
                     >
                       {project.title}
-                      <span className="sr-only"> — open live site</span>
-                    </a>
-                  </h3>
-                </div>
+                    </h3>
 
-                <p className="text-text-secondary text-sm leading-relaxed px-5 pb-4 flex-1">
-                  {project.description}
-                </p>
+                    <p className="text-text-secondary leading-relaxed mb-5">
+                      {project.description}
+                    </p>
 
-                <div className="px-5 pb-4 flex flex-wrap gap-1.5">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="accent-chip text-[11px] px-2.5 py-1"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="accent-chip text-[11px] px-2.5 py-1"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
 
-                {/* Footer affordance — visual only, the card link covers it */}
-                <div
-                  className="border-t px-5 py-3 flex items-center justify-between"
-                  style={{
-                    borderColor: `${project.accent}18`,
-                    background: "rgba(4,4,10,0.4)",
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex items-center gap-1.5 text-xs font-semibold"
-                    style={{
-                      color: project.accent,
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    VIEW MISSION
-                    <HiArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                  <span
-                    className="text-[11px] text-text-muted"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {project.tech.length} DEPS
-                  </span>
-                </div>
-              </article>
-            </AnimatedSection>
-          ))}
+                    <div className="flex items-center justify-between gap-4">
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 text-xs font-semibold transition-opacity duration-300 hover:opacity-75"
+                        style={{
+                          color: project.accent,
+                          fontFamily: "var(--font-mono)",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        VIEW MISSION
+                        <span className="sr-only">
+                          {" "}
+                          — open {project.title} live site
+                        </span>
+                        <HiArrowUpRight
+                          className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          aria-hidden="true"
+                        />
+                      </a>
+                      <span
+                        className="text-[11px] text-text-muted"
+                        style={{ fontFamily: "var(--font-mono)" }}
+                      >
+                        {project.tech.length} DEPS
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              </AnimatedSection>
+            );
+          })}
         </div>
       </div>
     </section>
