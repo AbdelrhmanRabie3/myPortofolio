@@ -25,6 +25,9 @@ import qusahPhone from "../../public/projects/qusah-store-mobile.webp";
 import bareqShot from "../../public/projects/bareq.webp";
 import bareqTablet from "../../public/projects/bareq-tablet.webp";
 import bareqPhone from "../../public/projects/bareq-mobile.webp";
+import latafaShot from "../../public/projects/latafa.webp";
+import latafaTablet from "../../public/projects/latafa-tablet.webp";
+import latafaPhone from "../../public/projects/latafa-mobile.webp";
 
 type Project = {
   file: string;
@@ -167,6 +170,26 @@ const projects: Project[] = [
     shot: bareqShot,
     tablet: bareqTablet,
     phone: bareqPhone,
+  },
+  {
+    file: "FILE_07",
+    title: "Latafa",
+    status: "ACTIVE",
+    accent: "#208ec5", // Latafa petrol blue
+    description:
+      "Custom Salla Twilight theme for a Saudi tissue manufacturer, built around bundle-led merchandising. Bespoke storefront components — a mega-menu, a redesigned product card, UGC and testimonial rails, and a gamified guess-and-win discount popup — all Arabic-first and RTL.",
+    tech: [
+      "Salla Platform",
+      "Twilight Engine",
+      "JavaScript",
+      "Tailwind CSS",
+      "CSS3",
+    ],
+    link: "https://latafa.sa/",
+    domain: "latafa.sa",
+    shot: latafaShot,
+    tablet: latafaTablet,
+    phone: latafaPhone,
   },
 ];
 

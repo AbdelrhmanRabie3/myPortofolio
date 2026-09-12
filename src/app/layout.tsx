@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /* Self-hosted at build time: no render-blocking request to Google, no FOUT,
@@ -85,6 +87,11 @@ export default function RootLayout({
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         {children}
+        {/* Cookieless, first-party analytics — no consent banner needed, and
+            served from this origin so ad blockers hit it far less than GA.
+            Both are inert outside Vercel and auto-disable in development. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
