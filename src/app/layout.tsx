@@ -22,11 +22,11 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-/* Defaults to the live deployment so OpenGraph/Twitter tags resolve to absolute
-   URLs without any env config. Set NEXT_PUBLIC_SITE_URL to override — e.g. when
-   moving to a custom domain. */
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://my-portofolio-mu-swart.vercel.app";
+/* Defaults to the production domain so OpenGraph/Twitter tags resolve to
+   absolute URLs without any env config. Set NEXT_PUBLIC_SITE_URL to override.
+   Keep this in step with the live domain: a stale value silently breaks every
+   social share preview, since the card images are resolved against it. */
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rabie3.me";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

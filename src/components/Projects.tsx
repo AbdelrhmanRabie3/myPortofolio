@@ -28,6 +28,9 @@ import bareqPhone from "../../public/projects/bareq-mobile.webp";
 import latafaShot from "../../public/projects/latafa.webp";
 import latafaTablet from "../../public/projects/latafa-tablet.webp";
 import latafaPhone from "../../public/projects/latafa-mobile.webp";
+import nsmatShot from "../../public/projects/nsmat.webp";
+import nsmatTablet from "../../public/projects/nsmat-tablet.webp";
+import nsmatPhone from "../../public/projects/nsmat-mobile.webp";
 
 type Project = {
   file: string;
@@ -66,8 +69,8 @@ const projects: Project[] = [
       "React Hook Form",
       "Zod",
     ],
-    link: "https://sales-hero-fe.qusah.workers.dev/ar",
-    domain: "sales-hero-fe.qusah.workers.dev",
+    link: "https://trysaleshero.com/ar",
+    domain: "trysaleshero.com",
     shot: salesHeroShot,
     tablet: salesHeroTablet,
     phone: salesHeroPhone,
@@ -190,6 +193,26 @@ const projects: Project[] = [
     shot: latafaShot,
     tablet: latafaTablet,
     phone: latafaPhone,
+  },
+  {
+    file: "FILE_08",
+    title: "Nsmat",
+    status: "ACTIVE",
+    accent: "#7f77ee", // Nsmat royal blue, nudged violet to stay clear of Qusah
+    description:
+      "Custom Salla Twilight theme for a Saudi sock brand. A bespoke product card carries the sale — inline size and colour pickers, per-pair unit pricing, savings badges, and purchase-count social proof — alongside a custom header, slide-out cart drawer, and footer. Arabic-first and RTL.",
+    tech: [
+      "Salla Platform",
+      "Twilight Engine",
+      "JavaScript",
+      "Tailwind CSS",
+      "CSS3",
+    ],
+    link: "https://nsmat.sa/",
+    domain: "nsmat.sa",
+    shot: nsmatShot,
+    tablet: nsmatTablet,
+    phone: nsmatPhone,
   },
 ];
 
