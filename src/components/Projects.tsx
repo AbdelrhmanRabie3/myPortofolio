@@ -216,6 +216,11 @@ const projects: Project[] = [
   },
 ];
 
+/* Every entry above is a shipped, publicly reachable site, so the About
+   section's "Live Projects" stat reads this instead of a hand-typed number
+   that goes stale each time a project is added. */
+export const liveProjectCount = projects.length;
+
 export default function Projects() {
   return (
     <section id="projects" className="py-24 md:py-32 relative">

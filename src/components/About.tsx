@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
+import { liveProjectCount } from "./Projects";
 
 const storyCards = [
   {
@@ -250,7 +251,11 @@ export default function About() {
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 {[
                   { value: "2+", label: "Years Exp", color: "#00ff88" },
-                  { value: "6", label: "Live Projects", color: "#00d4ff" },
+                  {
+                    value: String(liveProjectCount),
+                    label: "Live Projects",
+                    color: "#00d4ff",
+                  },
                   { value: "20+", label: "Technologies", color: "#7c3aed" },
                 ].map((stat) => (
                   <div
